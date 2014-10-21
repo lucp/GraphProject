@@ -8,19 +8,16 @@ import java.util.LinkedList;
 
 public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeType> {
 
-	private int vertexNumber;
+	private int matrixSize;
 	
 	private EdgeType[][] edges;
 	
 	private HashMap<Integer, VertexType> verticies;
 	
-	public MatrixGraph(int vertexNumber){
-		this.vertexNumber = vertexNumber;
-		this.edges = (EdgeType[][]) new Object[vertexNumber][vertexNumber];
-		this.verticies = new boolean[vertexNumber];
-		for (int i=0; i<vertexNumber ; i++){
-			this.verticies[i] = true;
-		}
+	public MatrixGraph(int matrixSize){
+		this.matrixSize = matrixSize;
+		this.edges = (EdgeType[][]) new Object[matrixSize][matrixSize];
+		this.verticies = new HashMap<Integer, VertexType>();
 	}
 	
 	public MatrixGraph(String filePath){
