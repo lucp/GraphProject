@@ -38,6 +38,26 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 			this.edges[this.verticies.get(entry.inVertex)][this.verticies.get(entry.outVertex)] = entry.midEdge;
 		}
 	}
+	
+	public MatrixGraph(LinkedList<GraphFileReader<VertexType, EdgeType>.FileEntry> fileEntries, int matrixSizeBuffer){
+		int index = 0;
+		this.verticies = new HashMap<VertexType, Integer>();
+		for (GraphFileReader<VertexType, EdgeType>.FileEntry entry : fileEntries){
+			if (!this.verticies.containsValue(entry.inVertex)){
+				this.verticies.put(entry.inVertex,index);
+				index++;
+			}
+			if (!this.verticies.containsValue(entry.outVertex)){
+				this.verticies.put(entry.outVertex,index);
+				index++;
+			}
+		}
+		this.matrixSize = this.verticies.size() + matrixSizeBuffer;
+		this.edges = (EdgeType[][]) new Object[this.matrixSize][this.matrixSize];
+		for (GraphFileReader<VertexType, EdgeType>.FileEntry entry : fileEntries){
+			this.edges[this.verticies.get(entry.inVertex)][this.verticies.get(entry.outVertex)] = entry.midEdge;
+		}
+	}
 
 	@Override
 	public void addVertex(VertexType vertexNumber) {
