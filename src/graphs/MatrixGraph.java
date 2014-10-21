@@ -19,10 +19,10 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		this.verticies = new HashMap<VertexType, Integer>();
 	}
 	
-	public MatrixGraph(LinkedList<GraphFileReader<VertexType, EdgeType>.FileEntry> fileEntries){
+	public MatrixGraph(LinkedList<Entry<VertexType, EdgeType>> fileEntries){
 		int index = 0;
 		this.verticies = new HashMap<VertexType, Integer>();
-		for (GraphFileReader<VertexType, EdgeType>.FileEntry entry : fileEntries){
+		for (Entry<VertexType, EdgeType> entry : fileEntries){
 			if (!this.verticies.containsValue(entry.inVertex)){
 				this.verticies.put(entry.inVertex,index);
 				index++;
@@ -34,15 +34,15 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		}
 		this.matrixSize = this.verticies.size();
 		this.edges = (EdgeType[][]) new Object[this.matrixSize][this.matrixSize];
-		for (GraphFileReader<VertexType, EdgeType>.FileEntry entry : fileEntries){
+		for (Entry<VertexType, EdgeType> entry : fileEntries){
 			this.edges[this.verticies.get(entry.inVertex)][this.verticies.get(entry.outVertex)] = entry.midEdge;
 		}
 	}
 	
-	public MatrixGraph(LinkedList<GraphFileReader<VertexType, EdgeType>.FileEntry> fileEntries, int matrixSizeBuffer){
+	public MatrixGraph(LinkedList<Entry<VertexType, EdgeType>> fileEntries, int matrixSizeBuffer){
 		int index = 0;
 		this.verticies = new HashMap<VertexType, Integer>();
-		for (GraphFileReader<VertexType, EdgeType>.FileEntry entry : fileEntries){
+		for (Entry<VertexType, EdgeType> entry : fileEntries){
 			if (!this.verticies.containsValue(entry.inVertex)){
 				this.verticies.put(entry.inVertex,index);
 				index++;
@@ -54,7 +54,7 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		}
 		this.matrixSize = this.verticies.size() + matrixSizeBuffer;
 		this.edges = (EdgeType[][]) new Object[this.matrixSize][this.matrixSize];
-		for (GraphFileReader<VertexType, EdgeType>.FileEntry entry : fileEntries){
+		for (Entry<VertexType, EdgeType> entry : fileEntries){
 			this.edges[this.verticies.get(entry.inVertex)][this.verticies.get(entry.outVertex)] = entry.midEdge;
 		}
 	}
