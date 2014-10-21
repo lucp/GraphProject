@@ -19,28 +19,6 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		this.edges = (EdgeType[][]) new Object[matrixSize][matrixSize];
 		this.verticies = new HashMap<Integer, VertexType>();
 	}
-	
-	public MatrixGraph(String filePath){
-		LinkedList<String> lines;
-		BufferedReader reader = null;
-		try {
-			String line;
-			reader = new BufferedReader(new FileReader(filePath));
-			while ((line = reader.readLine()) != null) {
-				line = line.trim();
-				
-			}
-			String[] num = line.split(",");
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				if (reader != null) reader.close();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-		}
-	}
 
 	@Override
 	public void addVertex(VertexType vertexNumber) {
