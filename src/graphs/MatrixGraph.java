@@ -1,8 +1,11 @@
 package graphs;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 
+import exceptions.VertexAlreadyExistsException;
 import reader.GraphFileReader;
 
 public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeType> {
@@ -59,10 +62,22 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		}
 	}
 
+	public int getMatrixSize() {
+		return this.matrixSize;
+	}
+	
+	/*public Integer findFreeMatrixEntry(){
+		Integer freeIndex = 0;
+		Integer[] values = (Integer[]) this.verticies.values().toArray();
+		Integer i = 0;
+		while (values[i].equals(obj) ==)
+	}*/
+
 	@Override
-	public void addVertex(VertexType vertexNumber) {
-		// TODO Auto-generated method stub
-		
+	public void addVertex(VertexType vertexNumber){
+		if (this.matrixSize > this.verticies.size()){
+			
+		}
 	}
 
 	@Override
