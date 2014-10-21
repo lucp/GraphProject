@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import factories.GraphObjectFactory;
+
 public class GraphFileReader<VertexType, EdgeType> {
 
 	private GraphObjectFactory<VertexType, EdgeType> factory;
@@ -13,9 +15,8 @@ public class GraphFileReader<VertexType, EdgeType> {
 		this.factory = factory;
 	}
 	
-	/*public Map<> readGraphGile(String filePath){
-		LinkedList<VertexType[]> connectedNodes = new LinkedList<VertexType[]>();
-		LinkedList<EdgeType>  connectingEgde = new LinkedList<EdgeType>();
+	public LinkedList<FileEntry> readGraphFile(String filePath){
+		LinkedList<FileEntry> entries = new LinkedList<FileEntry>();
 		BufferedReader reader = null;
 		try {
 			String line;
@@ -24,18 +25,35 @@ public class GraphFileReader<VertexType, EdgeType> {
 			while ((line = reader.readLine()) != null) {
 				line = line.trim();
 				entry = line.split(",");
-				connectedNodes.add(this.factory.createVertex(entry[0]))
+				entries.add(new FileEntry(factory.createVertex(entry[0]),factory.createVertex(entry[1]),factory.createEdge(entry[2])));
 			}
-		} catch (IOException e) {
+		}
+		catch (IOException e) {
 			e.printStackTrace();
-		} finally {
+		}
+		finally {
 			try {
 				if (reader != null) reader.close();
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
 		}
-	}*/
+		return entries;
+	}
 	
-	//public int getVertexNumberFromLines(LinkedList<String[]> lines)
+	public class FileEntry{
+		
+		public VertexType inVertex;
+		public VertexType outVertex;
+		public EdgeType midEdge;
+		
+		public FileEntry(VertexType inVertex, VertexType outVertex,EdgeType midEdge) {
+			super();
+			this.inVertex = inVertex;
+			this.outVertex = outVertex;
+			this.midEdge = midEdge;
+		}
+			
+	}
+	
 }

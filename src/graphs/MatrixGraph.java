@@ -1,10 +1,9 @@
 package graphs;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
+
+import reader.GraphFileReader;
 
 public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeType> {
 
@@ -12,12 +11,32 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 	
 	private EdgeType[][] edges;
 	
-	private HashMap<Integer, VertexType> verticies;
+	private HashMap<VertexType, Integer> verticies;
 	
 	public MatrixGraph(int matrixSize){
 		this.matrixSize = matrixSize;
 		this.edges = (EdgeType[][]) new Object[matrixSize][matrixSize];
-		this.verticies = new HashMap<Integer, VertexType>();
+		this.verticies = new HashMap<VertexType, Integer>();
+	}
+	
+	public MatrixGraph(LinkedList<GraphFileReader<VertexType, EdgeType>.FileEntry> fileEntries){
+		int index = 0;
+		this.verticies = new HashMap<VertexType, Integer>();
+		for (GraphFileReader<VertexType, EdgeType>.FileEntry entry : fileEntries){
+			if (!this.verticies.containsValue(entry.inVertex)){
+				this.verticies.put(entry.inVertex,index);
+				index++;
+			}
+			if (!this.verticies.containsValue(entry.outVertex)){
+				this.verticies.put(entry.outVertex,index);
+				index++;
+			}
+		}
+		this.matrixSize = this.verticies.size();
+		this.edges = (EdgeType[][]) new Object[this.matrixSize][this.matrixSize];
+		for (GraphFileReader<VertexType, EdgeType>.FileEntry entry : fileEntries){
+			this.edges[this.verticies.get(entry.inVertex)][this.verticies.get(entry.outVertex)] = entry.midEdge;
+		}
 	}
 
 	@Override

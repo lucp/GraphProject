@@ -1,4 +1,4 @@
-package reader;
+package factories;
 
 public interface GraphObjectFactory<VertexType, EdgeType> {
 
