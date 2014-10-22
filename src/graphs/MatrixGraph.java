@@ -26,11 +26,11 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		Integer index = 0;
 		this.verticies = new HashMap<VertexType, Integer>();
 		for (Entry<VertexType, EdgeType> entry : fileEntries){
-			if (!this.verticies.containsValue(entry.inVertex)){
+			if (!this.verticies.containsKey(entry.inVertex)){
 				this.verticies.put(entry.inVertex,index);
 				index++;
 			}
-			if (!this.verticies.containsValue(entry.outVertex)){
+			if (!this.verticies.containsKey(entry.outVertex)){
 				this.verticies.put(entry.outVertex,index);
 				index++;
 			}
@@ -49,11 +49,11 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		Integer  index = 0;
 		this.verticies = new HashMap<VertexType, Integer>();
 		for (Entry<VertexType, EdgeType> entry : fileEntries){
-			if (!this.verticies.containsValue(entry.inVertex)){
+			if (!this.verticies.containsKey(entry.inVertex)){
 				this.verticies.put(entry.inVertex,index);
 				index++;
 			}
-			if (!this.verticies.containsValue(entry.outVertex)){
+			if (!this.verticies.containsKey(entry.outVertex)){
 				this.verticies.put(entry.outVertex,index);
 				index++;
 			}
@@ -127,8 +127,11 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 
 	@Override
 	public VertexType[] getNeighbours(VertexType vertex) {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedList<VertexType> neighbours = new LinkedList<VertexType>();
+		for (VertexType potentialNeighbour : this.verticies.keySet()){
+			if (this.areNeighbours(vertex, potentialNeighbour)) neighbours.add(potentialNeighbour);
+		}
+		return (VertexType[]) neighbours.toArray();
 	}
 
 	@Override
@@ -146,20 +149,25 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 
 	@Override
 	public int vertexNumber() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.verticies.size();
 	}
 
 	@Override
 	public int edgeNumber() {
-		// TODO Auto-generated method stub
-		return 0;
+		int edgeNumber = 0;
+		for (int i = 0; i < this.matrixSize ; i++){
+			for (int j = 0; j < this.matrixSize; j++){
+				if (this.edges[i][j] != null) edgeNumber++;
+			}
+		}
+		return edgeNumber;
 	}
 
 	@Override
 	public boolean areNeighbours(VertexType firstVertex, VertexType secondVertex) {
-		// TODO Auto-generated method stub
-		return false;
+		if (this.edges[this.verticies.get(firstVertex)][this.verticies.get(secondVertex)] != null) return true;
+		else if (this.edges[this.verticies.get(secondVertex)][this.verticies.get(firstVertex)] != null) return true;
+		else return false;
 	}
 
 }

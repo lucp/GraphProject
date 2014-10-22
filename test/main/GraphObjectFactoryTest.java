@@ -1,4 +1,4 @@
-package factoriestest;
+package main;
 
 import static org.junit.Assert.*;
 
