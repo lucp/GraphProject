@@ -37,6 +37,9 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		}
 		this.matrixSize = this.verticies.size();
 		this.edges = (EdgeType[][]) new Object[this.matrixSize][this.matrixSize];
+		for (int i = 0; i < this.matrixSize; i++){
+			
+		}
 		for (Entry<VertexType, EdgeType> entry : fileEntries){
 			this.edges[this.verticies.get(entry.inVertex)][this.verticies.get(entry.outVertex)] = entry.midEdge;
 		}
