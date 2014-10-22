@@ -76,20 +76,36 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 	}
 
 	@Override
-	public void addVertex(VertexType vertexNumber){
+	public void addVertex(VertexType vertex){
 		Integer freeIndex = findFreeMatrixEntry();
 		if (freeIndex == null){
-			
+			EdgeType[][] newEdges = (EdgeType[][]) new Object[this.matrixSize+1][this.matrixSize+1];
+			for (int i = 0; i < this.matrixSize; i++){
+				for (int j = 0; j < this.matrixSize; j++){
+					newEdges[i][j] = this.edges[i][j];
+				}
+			}
+			this.matrixSize++;
+			for (int i = 0; i < this.matrixSize; i++){
+				newEdges[i][this.matrixSize-1] = null;
+				newEdges[this.matrixSize-1][i] = null;
+			}
+			this.verticies.put(vertex, freeIndex);
 		}
 		else{
-			
+			this.verticies.put(vertex, freeIndex);
 		}
 	}
 
 	@Override
-	public void deleteVertex(VertexType number) {
-		// TODO Auto-generated method stub
+	public void deleteVertex(VertexType vertex) {
+		Integer index = this.verticies.get(vertex);
+		this.verticies.remove(vertex);
 		
+		for (int i = 0; i < this.matrixSize; i++){
+			this.edges[i][index] = null;
+			this.edges[index][i] = null;
+		}
 	}
 
 	@Override
