@@ -23,7 +23,7 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 	}
 	
 	public MatrixGraph(LinkedList<Entry<VertexType, EdgeType>> fileEntries){
-		int index = 0;
+		Integer index = 0;
 		this.verticies = new HashMap<VertexType, Integer>();
 		for (Entry<VertexType, EdgeType> entry : fileEntries){
 			if (!this.verticies.containsValue(entry.inVertex)){
@@ -43,7 +43,7 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 	}
 	
 	public MatrixGraph(LinkedList<Entry<VertexType, EdgeType>> fileEntries, int matrixSizeBuffer){
-		int index = 0;
+		Integer  index = 0;
 		this.verticies = new HashMap<VertexType, Integer>();
 		for (Entry<VertexType, EdgeType> entry : fileEntries){
 			if (!this.verticies.containsValue(entry.inVertex)){
@@ -66,16 +66,22 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		return this.matrixSize;
 	}
 	
-	/*public Integer findFreeMatrixEntry(){
+	public Integer findFreeMatrixEntry(){
 		Integer freeIndex = 0;
-		Integer[] values = (Integer[]) this.verticies.values().toArray();
-		Integer i = 0;
-		while (values[i].equals(obj) ==)
-	}*/
+		while (freeIndex < this.matrixSize && this.verticies.containsValue(freeIndex)){
+			freeIndex++;
+		}
+		if (freeIndex > this.matrixSize) return null;
+		else return freeIndex;
+	}
 
 	@Override
 	public void addVertex(VertexType vertexNumber){
-		if (this.matrixSize > this.verticies.size()){
+		Integer freeIndex = findFreeMatrixEntry();
+		if (freeIndex == null){
+			
+		}
+		else{
 			
 		}
 	}
