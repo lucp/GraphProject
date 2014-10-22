@@ -24,8 +24,10 @@ public class GraphFileReader<VertexType, EdgeType> {
 			String[] entry;
 			reader = new BufferedReader(new FileReader(filePath));
 			while ((line = reader.readLine()) != null) {
-				line = line.trim();
-				entry = line.split(",");
+				entry = line.split(";");
+				entry[0] = entry[0].trim();
+				entry[1] = entry[1].trim();
+				entry[2] = entry[2].trim();
 				entries.add(new Entry<VertexType, EdgeType>(factory.createVertex(entry[0]),factory.createVertex(entry[1]),factory.createEdge(entry[2])));
 			}
 		}
