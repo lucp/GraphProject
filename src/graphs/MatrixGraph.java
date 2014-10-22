@@ -110,26 +110,35 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 
 	@Override
 	public void addEdge(VertexType source, VertexType destination, EdgeType edge) {
-		// TODO Auto-generated method stub
-		
+		Integer sourceIndex = this.verticies.get(source);
+		Integer destinationIndex = this.verticies.get(destination);
+		this.edges[sourceIndex][destinationIndex] = edge;		
 	}
 
 	@Override
 	public void deleteEdge(VertexType source, VertexType destination) {
-		// TODO Auto-generated method stub
-		
+		Integer sourceIndex = this.verticies.get(source);
+		Integer destinationIndex = this.verticies.get(destination);
+		this.edges[sourceIndex][destinationIndex] = null;
 	}
 
 	@Override
-	public VertexType[] getNeighbours(VertexType vertexNumber) {
+	public VertexType[] getNeighbours(VertexType vertex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public EdgeType[] getIncidentEdges(VertexType vartexNumber) {
-		// TODO Auto-generated method stub
-		return null;
+	public EdgeType[] getIncidentEdges(VertexType vertex) {
+		LinkedList<EdgeType> incidentEdges = new LinkedList<EdgeType>();
+		Integer index = this.verticies.get(vertex);
+		for (int i = 0; i < this.matrixSize; i++){
+			EdgeType edge1 = this.edges[i][index];
+			if(edge1 != null) incidentEdges.add(edge1);
+			EdgeType edge2 = this.edges[index][i];
+			if(edge2 != null) incidentEdges.add(edge2);
+		}
+		return (EdgeType[]) incidentEdges.toArray();
 	}
 
 	@Override
