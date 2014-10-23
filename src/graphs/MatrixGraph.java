@@ -74,7 +74,7 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		while (freeIndex < this.matrixSize && this.verticies.containsValue(freeIndex)){
 			freeIndex++;
 		}
-		if (freeIndex > this.matrixSize) return null;
+		if (freeIndex >= this.matrixSize) return null;
 		else return freeIndex;
 	}
 
