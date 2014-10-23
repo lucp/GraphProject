@@ -137,17 +137,49 @@ public class MatrixGraphTest {
 		matrixGraph.addVertex(vertex3);
 		matrixGraph.addEdge(vertex1, vertex2, edge1);
 		matrixGraph.addEdge(vertex2, vertex3, edge2);
-		assertEquals("neighbours", matrixGraph.getNeighbours(vertex1)[0], vertex2);
+		assertTrue("neighbours", matrixGraph.getNeighbours(vertex2).contains(vertex1));
+		assertTrue("neighbours", matrixGraph.getNeighbours(vertex2).contains(vertex3));
+		assertFalse("not neighbours", matrixGraph.getNeighbours(vertex2).contains(vertex2));
+		assertFalse("not neighbours", matrixGraph.getNeighbours(vertex1).contains(vertex3));
 	}
 
 	@Test
 	public void getIncidentEdgesTest() {
-
+		int size = 3;
+		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(size);
+		Integer vertex1 = new Integer(1);
+		Integer vertex2 = new Integer(2);
+		Integer vertex3 = new Integer(3);
+		Double edge1 = new Double(4);
+		Double edge2 = new Double(5);
+		matrixGraph.addVertex(vertex1);
+		matrixGraph.addVertex(vertex2);
+		matrixGraph.addVertex(vertex3);
+		matrixGraph.addEdge(vertex1, vertex2, edge1);
+		matrixGraph.addEdge(vertex2, vertex3, edge2);
+		assertTrue("incident edge", matrixGraph.getIncidentEdges(vertex2).contains(edge1));
+		assertTrue("incident edge", matrixGraph.getIncidentEdges(vertex2).contains(edge2));
+		assertTrue("incident edge", matrixGraph.getIncidentEdges(vertex1).contains(edge1));
+		assertFalse("not incident edge", matrixGraph.getIncidentEdges(vertex1).contains(edge2));
 	}
 
 	@Test
 	public void areNeighboursTest() {
-
+		int size = 3;
+		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(size);
+		Integer vertex1 = new Integer(1);
+		Integer vertex2 = new Integer(2);
+		Integer vertex3 = new Integer(3);
+		Double edge1 = new Double(4);
+		Double edge2 = new Double(5);
+		matrixGraph.addVertex(vertex1);
+		matrixGraph.addVertex(vertex2);
+		matrixGraph.addVertex(vertex3);
+		matrixGraph.addEdge(vertex1, vertex2, edge1);
+		matrixGraph.addEdge(vertex2, vertex3, edge2);
+		assertTrue("are neighbours", matrixGraph.areNeighbours(vertex1, vertex2));
+		assertTrue("are neighbours", matrixGraph.areNeighbours(vertex2, vertex3));
+		assertFalse("are not neighbours", matrixGraph.areNeighbours(vertex1, vertex3));
 	}
 
 }

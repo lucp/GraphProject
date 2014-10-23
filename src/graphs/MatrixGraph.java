@@ -126,16 +126,16 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 	}
 
 	@Override
-	public VertexType[] getNeighbours(VertexType vertex) {
+	public LinkedList<VertexType> getNeighbours(VertexType vertex) {
 		LinkedList<VertexType> neighbours = new LinkedList<VertexType>();
 		for (VertexType potentialNeighbour : this.verticies.keySet()){
 			if (this.areNeighbours(vertex, potentialNeighbour)) neighbours.add(potentialNeighbour);
 		}
-		return (VertexType[]) neighbours.toArray();
+		return neighbours;
 	}
 
 	@Override
-	public EdgeType[] getIncidentEdges(VertexType vertex) {
+	public LinkedList<EdgeType> getIncidentEdges(VertexType vertex) {
 		LinkedList<EdgeType> incidentEdges = new LinkedList<EdgeType>();
 		Integer index = this.verticies.get(vertex);
 		for (int i = 0; i < this.matrixSize; i++){
@@ -144,7 +144,7 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 			EdgeType edge2 = this.edges[index][i];
 			if(edge2 != null) incidentEdges.add(edge2);
 		}
-		return (EdgeType[]) incidentEdges.toArray();
+		return incidentEdges;
 	}
 
 	@Override
