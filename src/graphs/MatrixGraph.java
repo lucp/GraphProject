@@ -1,12 +1,7 @@
 package graphs;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.LinkedList;
-
-import exceptions.VertexAlreadyExistsException;
-import reader.GraphFileReader;
 
 public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeType> {
 
@@ -16,12 +11,14 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 	
 	private HashMap<VertexType, Integer> verticies;
 	
+	@SuppressWarnings("unchecked")
 	public MatrixGraph(int matrixSize){
 		this.matrixSize = matrixSize;
 		this.edges = (EdgeType[][]) new Object[matrixSize][matrixSize];
 		this.verticies = new HashMap<VertexType, Integer>();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public MatrixGraph(LinkedList<Entry<VertexType, EdgeType>> fileEntries){
 		Integer index = 0;
 		this.verticies = new HashMap<VertexType, Integer>();
@@ -45,6 +42,7 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public MatrixGraph(LinkedList<Entry<VertexType, EdgeType>> fileEntries, int matrixSizeBuffer){
 		Integer  index = 0;
 		this.verticies = new HashMap<VertexType, Integer>();
@@ -78,6 +76,7 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		else return freeIndex;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void addVertex(VertexType vertex){
 		Integer freeIndex = findFreeMatrixEntry();
@@ -93,7 +92,7 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 				newEdges[i][this.matrixSize-1] = null;
 				newEdges[this.matrixSize-1][i] = null;
 			}
-			this.verticies.put(vertex, freeIndex);
+			this.verticies.put(vertex, this.matrixSize-1);
 		}
 		else{
 			this.verticies.put(vertex, freeIndex);
