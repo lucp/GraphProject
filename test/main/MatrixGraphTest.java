@@ -3,17 +3,42 @@ package main;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.util.LinkedList;
 
 import factories.GraphIntegerDoubleFactory;
 import graphs.MatrixGraph;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import reader.GraphFileReader;
 
 public class MatrixGraphTest {
 
+	private int size;
+	private MatrixGraph<Integer, Double> matrixGraph;
+	private Integer vertex1;
+	private Integer vertex2;
+	private Integer vertex3;
+	private Double edge1;
+	private Double edge2;
+	
+	@Before
+	public void init(){
+		size = 4;
+		matrixGraph = new MatrixGraph<Integer, Double>(size);
+		vertex1 = new Integer(1);
+		vertex2 = new Integer(2);
+		vertex3 = new Integer(3);
+		edge1 = new Double(4);
+		edge2 = new Double(5);
+		matrixGraph.addVertex(vertex1);
+		matrixGraph.addVertex(vertex2);
+		matrixGraph.addVertex(vertex3);
+		matrixGraph.addEdge(vertex1, vertex2, edge1);
+		matrixGraph.addEdge(vertex2, vertex3, edge2);
+	}
+	
+	
 	@Test
 	public void matrixGraphDefaultConstructorTest() {
 		int size = 10;
@@ -28,7 +53,8 @@ public class MatrixGraphTest {
 		int buffer = 20;
 		GraphIntegerDoubleFactory factory = new GraphIntegerDoubleFactory();
 		GraphFileReader<Integer, Double> reader = new GraphFileReader<Integer, Double>(factory);
-		MatrixGraph<Integer, Double>matrixGraph = new MatrixGraph<Integer, Double>(reader.readGraphFile("res/niemategopliku.txt"), buffer);
+		@SuppressWarnings("unused")
+		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(reader.readGraphFile("res/niemategopliku.txt"), buffer);
 	}
 	
 	@Test
@@ -45,98 +71,47 @@ public class MatrixGraphTest {
 	
 	@Test
 	public void findFreeMatrixEntryTest(){
-		int size = 2;
-		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(size);
-		Integer vertex1 = new Integer(1);
-		Integer vertex2 = new Integer(2);
-		matrixGraph.addVertex(vertex1);
-		matrixGraph.addVertex(vertex2);
+		assertEquals("free space is 4", matrixGraph.findFreeMatrixEntry(), new Integer(3));
+		Integer vertex4 = new Integer(4);
+		matrixGraph.addVertex(vertex4);
 		assertNull("no free matrix entry", matrixGraph.findFreeMatrixEntry());
-		size = 2;
-		matrixGraph = new MatrixGraph<Integer, Double>(size);
-		vertex1 = new Integer(1);
-		matrixGraph.addVertex(vertex1);
-		assertEquals("free space is 1", matrixGraph.findFreeMatrixEntry(), new Integer(1));
 	}
 	
 	@Test
 	public void addVertexTest(){
-		int size = 3;
-		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(size);
-		Integer vertex1 = new Integer(1);
-		Integer vertex2 = new Integer(2);
-		matrixGraph.addVertex(vertex1);
-		matrixGraph.addVertex(vertex2);
-		assertEquals("2 vertex expected", matrixGraph.vertexNumber(), 2);
-		assertEquals("size of matrix", matrixGraph.getMatrixSize(), 3);
-		
-		size = 1;
-		matrixGraph = new MatrixGraph<Integer, Double>(size);
-		vertex1 = new Integer(1);
-		vertex2 = new Integer(2);
-		matrixGraph.addVertex(vertex1);
-		matrixGraph.addVertex(vertex2);
-		assertEquals("2 vertex expected", matrixGraph.vertexNumber(), 2);
-		assertEquals("size of matrix", matrixGraph.getMatrixSize(), 2);
+		Integer vertex4 = new Integer(4);
+		assertEquals("matrix size", matrixGraph.getMatrixSize(), 4);
+		matrixGraph.addVertex(vertex4);
+		assertEquals("2 vertex expected", matrixGraph.vertexNumber(), 4);
+		assertEquals("size of matrix", matrixGraph.getMatrixSize(), 4);
+		Integer vertex5 = new Integer(5);
+		matrixGraph.addVertex(vertex5);
+		assertEquals("2 vertex expected", matrixGraph.vertexNumber(), 5);
+		assertEquals("size of matrix", matrixGraph.getMatrixSize(), 5);
 	}
 	
 	@Test
 	public void deleteVertexTest(){
-		int size = 3;
-		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(size);
-		Integer vertex1 = new Integer(1);
-		Integer vertex2 = new Integer(2);
-		Double edge = new Double(3);
-		matrixGraph.addVertex(vertex1);
-		matrixGraph.addVertex(vertex2);
-		matrixGraph.addEdge(vertex1, vertex2, edge);
 		matrixGraph.deleteVertex(vertex1);
-		assertEquals("1 vertex expected", matrixGraph.vertexNumber(), 1);
-		assertEquals("size of matrix", matrixGraph.getMatrixSize(), 3);
-		assertEquals("no edge", matrixGraph.edgeNumber(), 0);
+		assertEquals("2 vertex expected", matrixGraph.vertexNumber(), 2);
+		assertEquals("size of matrix", matrixGraph.getMatrixSize(), size);
+		assertEquals("1 edge", matrixGraph.edgeNumber(), 1);
 	}
 	
 	@Test
 	public void addEdgeTest() {
-		int size = 3;
-		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(size);
-		Integer vertex1 = new Integer(1);
-		Integer vertex2 = new Integer(2);
-		Double edge = new Double(3);
-		matrixGraph.addVertex(vertex1);
-		matrixGraph.addVertex(vertex2);
-		matrixGraph.addEdge(vertex1, vertex2, edge);
-		assertEquals("1 edge", matrixGraph.edgeNumber(), 1);
+		matrixGraph.addEdge(vertex2, vertex1, edge1);
+		assertEquals("1 edge", matrixGraph.edgeNumber(), 3);
 	}
 
 	@Test
 	public void deleteEdgeTest() {
-		int size = 3;
-		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(size);
-		Integer vertex1 = new Integer(1);
-		Integer vertex2 = new Integer(2);
-		Double edge = new Double(3);
-		matrixGraph.addVertex(vertex1);
-		matrixGraph.addVertex(vertex2);
-		matrixGraph.addEdge(vertex1, vertex2, edge);
 		matrixGraph.deleteEdge(vertex1, vertex2);
-		assertEquals("1 edge", matrixGraph.edgeNumber(), 0);
+		assertEquals("1 edge", matrixGraph.edgeNumber(), 1);
 	}
 	
 	@Test
 	public void getNeighboursTest() {
-		int size = 3;
-		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(size);
-		Integer vertex1 = new Integer(1);
-		Integer vertex2 = new Integer(2);
-		Integer vertex3 = new Integer(3);
-		Double edge1 = new Double(4);
-		Double edge2 = new Double(5);
-		matrixGraph.addVertex(vertex1);
-		matrixGraph.addVertex(vertex2);
-		matrixGraph.addVertex(vertex3);
-		matrixGraph.addEdge(vertex1, vertex2, edge1);
-		matrixGraph.addEdge(vertex2, vertex3, edge2);
 		assertTrue("neighbours", matrixGraph.getNeighbours(vertex2).contains(vertex1));
 		assertTrue("neighbours", matrixGraph.getNeighbours(vertex2).contains(vertex3));
 		assertFalse("not neighbours", matrixGraph.getNeighbours(vertex2).contains(vertex2));
@@ -145,18 +120,6 @@ public class MatrixGraphTest {
 
 	@Test
 	public void getIncidentEdgesTest() {
-		int size = 3;
-		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(size);
-		Integer vertex1 = new Integer(1);
-		Integer vertex2 = new Integer(2);
-		Integer vertex3 = new Integer(3);
-		Double edge1 = new Double(4);
-		Double edge2 = new Double(5);
-		matrixGraph.addVertex(vertex1);
-		matrixGraph.addVertex(vertex2);
-		matrixGraph.addVertex(vertex3);
-		matrixGraph.addEdge(vertex1, vertex2, edge1);
-		matrixGraph.addEdge(vertex2, vertex3, edge2);
 		assertTrue("incident edge", matrixGraph.getIncidentEdges(vertex2).contains(edge1));
 		assertTrue("incident edge", matrixGraph.getIncidentEdges(vertex2).contains(edge2));
 		assertTrue("incident edge", matrixGraph.getIncidentEdges(vertex1).contains(edge1));
@@ -165,18 +128,6 @@ public class MatrixGraphTest {
 
 	@Test
 	public void areNeighboursTest() {
-		int size = 3;
-		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(size);
-		Integer vertex1 = new Integer(1);
-		Integer vertex2 = new Integer(2);
-		Integer vertex3 = new Integer(3);
-		Double edge1 = new Double(4);
-		Double edge2 = new Double(5);
-		matrixGraph.addVertex(vertex1);
-		matrixGraph.addVertex(vertex2);
-		matrixGraph.addVertex(vertex3);
-		matrixGraph.addEdge(vertex1, vertex2, edge1);
-		matrixGraph.addEdge(vertex2, vertex3, edge2);
 		assertTrue("are neighbours", matrixGraph.areNeighbours(vertex1, vertex2));
 		assertTrue("are neighbours", matrixGraph.areNeighbours(vertex2, vertex3));
 		assertFalse("are not neighbours", matrixGraph.areNeighbours(vertex1, vertex3));
