@@ -88,6 +88,9 @@ public class MatrixGraphTest {
 		matrixGraph.addVertex(vertex5);
 		assertEquals("2 vertex expected", matrixGraph.vertexNumber(), 5);
 		assertEquals("size of matrix", matrixGraph.getMatrixSize(), 5);
+		Double edge = new Double(3);
+		matrixGraph.addEdge(vertex5, vertex4, edge);
+		assertEquals("3 edges expected", matrixGraph.edgeNumber(), 3);
 	}
 	
 	@Test
@@ -113,6 +116,7 @@ public class MatrixGraphTest {
 	@Test
 	public void getNeighboursTest() {
 		assertTrue("neighbours", matrixGraph.getNeighbours(vertex2).contains(vertex1));
+		assertTrue("neighbours", matrixGraph.getNeighbours(vertex1).contains(vertex2));
 		assertTrue("neighbours", matrixGraph.getNeighbours(vertex2).contains(vertex3));
 		assertFalse("not neighbours", matrixGraph.getNeighbours(vertex2).contains(vertex2));
 		assertFalse("not neighbours", matrixGraph.getNeighbours(vertex1).contains(vertex3));
@@ -130,6 +134,7 @@ public class MatrixGraphTest {
 	public void areNeighboursTest() {
 		assertTrue("are neighbours", matrixGraph.areNeighbours(vertex1, vertex2));
 		assertTrue("are neighbours", matrixGraph.areNeighbours(vertex2, vertex3));
+		assertTrue("are neighbours", matrixGraph.areNeighbours(vertex3, vertex2));
 		assertFalse("are not neighbours", matrixGraph.areNeighbours(vertex1, vertex3));
 	}
 

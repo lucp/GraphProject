@@ -89,6 +89,7 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 				newEdges[i][this.matrixSize-1] = null;
 				newEdges[this.matrixSize-1][i] = null;
 			}
+			this.edges = newEdges;
 			this.verticies.put(vertex, this.matrixSize-1);
 		}
 		else{

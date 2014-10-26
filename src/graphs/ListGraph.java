@@ -3,6 +3,8 @@ package graphs;
 import java.util.HashMap;
 import java.util.LinkedList;
 
+import com.sun.javafx.geom.Edge;
+
 public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeType> {
 
 	int listSize;
@@ -71,43 +73,101 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 	}
 	
 	public Integer findFreeListEntry(){
-		return null;
+		Integer freeIndex = 0;
+		while (freeIndex < this.listSize && this.verticies.containsValue(freeIndex)){
+			freeIndex++;
+		}
+		if (freeIndex >= this.listSize) return null;
+		else return freeIndex;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public void addVertex(VertexType vertex) {
-		// TODO Auto-generated method stub
-		
+		Integer freeIndex = findFreeListEntry();
+		if (freeIndex == null){
+			LinkedList<ListElement<VertexType, EdgeType>>[] newNeighbourhood = new LinkedList[this.listSize+1];
+			for (int i = 0; i < this.listSize; i++){
+				newNeighbourhood[i] = this.neighbourhood[i];
+			}
+			this.listSize++;
+			newNeighbourhood[this.listSize-1] = new LinkedList<ListElement<VertexType, EdgeType>>();
+			this.neighbourhood = newNeighbourhood;
+			this.verticies.put(vertex, this.listSize-1);
+		}
+		else{
+			this.verticies.put(vertex, freeIndex);
+			this.neighbourhood[freeIndex] =  new LinkedList<ListElement<VertexType, EdgeType>>();
+		}
 	}
 
 	@Override
 	public void deleteVertex(VertexType vertex) {
-		// TODO Auto-generated method stub
+		Integer index = this.verticies.get(vertex);
+		this.verticies.remove(vertex);
 		
+		this.neighbourhood[index] = null;
 	}
 
 	@Override
 	public void addEdge(VertexType source, VertexType destination, EdgeType edge) {
-		// TODO Auto-generated method stub
-		
+		Integer sourceIndex = this.verticies.get(source);
+		this.neighbourhood[sourceIndex].add(new ListElement<VertexType, EdgeType>(destination, edge));
 	}
 
 	@Override
 	public void deleteEdge(VertexType source, VertexType destination) {
-		// TODO Auto-generated method stub
-		
+		Integer sourceIndex = this.verticies.get(source);
+		int destinationIndex = -1;
+		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
+			if (this.neighbourhood[sourceIndex].get(i).inVertex == destination){
+				destinationIndex = i;
+				break;
+			}
+		}
+		if (destinationIndex != -1){
+			this.neighbourhood[sourceIndex].remove(destinationIndex);
+		}
 	}
 
 	@Override
 	public LinkedList<VertexType> getNeighbours(VertexType vertex) {
-		// TODO Auto-generated method stub
-		return null;
+		Integer sourceIndex = this.verticies.get(vertex);
+		LinkedList<VertexType> neighbours = new LinkedList<VertexType>();
+		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
+			neighbours.add(this.neighbourhood[sourceIndex].get(i).inVertex);
+		}
+		for (VertexType neighbour : this.verticies.keySet()){
+			if (neighbour != vertex){
+				sourceIndex = this.verticies.get(neighbour);
+				for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
+					if (this.neighbourhood[sourceIndex].get(i).inVertex == vertex){
+						neighbours.add(neighbour);
+					}
+				}
+			}
+		}
+		return neighbours;
 	}
 
 	@Override
-	public LinkedList<EdgeType> getIncidentEdges(VertexType vartex) {
-		// TODO Auto-generated method stub
-		return null;
+	public LinkedList<EdgeType> getIncidentEdges(VertexType vertex) {
+		LinkedList<EdgeType> incidentEdges = new LinkedList<EdgeType>();
+		Integer sourceIndex = this.verticies.get(vertex);
+		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
+			incidentEdges.add(this.neighbourhood[sourceIndex].get(i).inEdge);
+		}
+		for (VertexType neighbour : this.verticies.keySet()){
+			if (neighbour != vertex){
+				sourceIndex = this.verticies.get(neighbour);
+				for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
+					if (this.neighbourhood[sourceIndex].get(i).inVertex == vertex){
+						incidentEdges.add(this.neighbourhood[sourceIndex].get(i).inEdge);
+					}
+				}
+			}
+		}
+		return incidentEdges;
 	}
 
 	@Override
@@ -128,7 +188,18 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 
 	@Override
 	public boolean areNeighbours(VertexType firstVertex, VertexType secondVertex) {
-		// TODO Auto-generated method stub
+		Integer sourceIndex = this.verticies.get(firstVertex);
+		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
+			if (this.neighbourhood[sourceIndex].get(i).inVertex == secondVertex){
+				return true;
+			}
+		}
+		sourceIndex = this.verticies.get(secondVertex);
+		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
+			if (this.neighbourhood[sourceIndex].get(i).inVertex == firstVertex){
+				return true;
+			}
+		}
 		return false;
 	}
 	

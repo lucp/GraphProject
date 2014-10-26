@@ -74,27 +74,30 @@ public class ListGraphTest {
 		assertEquals("free space is 4", listGraph.findFreeListEntry(), new Integer(3));
 		Integer vertex4 = new Integer(4);
 		listGraph.addVertex(vertex4);
-		assertNull("no free matrix entry", listGraph.findFreeListEntry());
+		assertNull("no free list entry", listGraph.findFreeListEntry());
 	}
 	
 	@Test
 	public void addVertexTest(){
 		Integer vertex4 = new Integer(4);
-		assertEquals("matrix size", listGraph.getListSize(), 4);
+		assertEquals("list size", listGraph.getListSize(), 4);
 		listGraph.addVertex(vertex4);
 		assertEquals("2 vertex expected", listGraph.vertexNumber(), 4);
-		assertEquals("size of matrix", listGraph.getListSize(), 4);
+		assertEquals("size of list", listGraph.getListSize(), 4);
 		Integer vertex5 = new Integer(5);
 		listGraph.addVertex(vertex5);
 		assertEquals("2 vertex expected", listGraph.vertexNumber(), 5);
-		assertEquals("size of matrix", listGraph.getListSize(), 5);
+		assertEquals("size of list", listGraph.getListSize(), 5);
+		Double edge = new Double(3);
+		listGraph.addEdge(vertex5, vertex4, edge);
+		assertEquals("3 edges expected", listGraph.edgeNumber(), 3);
 	}
 	
 	@Test
 	public void deleteVertexTest(){
 		listGraph.deleteVertex(vertex1);
 		assertEquals("2 vertex expected", listGraph.vertexNumber(), 2);
-		assertEquals("size of matrix", listGraph.getListSize(), size);
+		assertEquals("size of list", listGraph.getListSize(), size);
 		assertEquals("1 edge", listGraph.edgeNumber(), 1);
 	}
 	
@@ -112,6 +115,7 @@ public class ListGraphTest {
 	
 	@Test
 	public void getNeighboursTest() {
+		assertTrue("neighbours", listGraph.getNeighbours(vertex1).contains(vertex2));
 		assertTrue("neighbours", listGraph.getNeighbours(vertex2).contains(vertex1));
 		assertTrue("neighbours", listGraph.getNeighbours(vertex2).contains(vertex3));
 		assertFalse("not neighbours", listGraph.getNeighbours(vertex2).contains(vertex2));
@@ -120,9 +124,9 @@ public class ListGraphTest {
 
 	@Test
 	public void getIncidentEdgesTest() {
+		assertTrue("incident edge", listGraph.getIncidentEdges(vertex1).contains(edge1));
 		assertTrue("incident edge", listGraph.getIncidentEdges(vertex2).contains(edge1));
 		assertTrue("incident edge", listGraph.getIncidentEdges(vertex2).contains(edge2));
-		assertTrue("incident edge", listGraph.getIncidentEdges(vertex1).contains(edge1));
 		assertFalse("not incident edge", listGraph.getIncidentEdges(vertex1).contains(edge2));
 	}
 
@@ -130,6 +134,7 @@ public class ListGraphTest {
 	public void areNeighboursTest() {
 		assertTrue("are neighbours", listGraph.areNeighbours(vertex1, vertex2));
 		assertTrue("are neighbours", listGraph.areNeighbours(vertex2, vertex3));
+		assertTrue("are neighbours", listGraph.areNeighbours(vertex3, vertex2));
 		assertFalse("are not neighbours", listGraph.areNeighbours(vertex1, vertex3));
 	}
 
