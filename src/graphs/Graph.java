@@ -13,5 +13,6 @@ public interface Graph<VertexType, EdgeType> {
 	public int vertexNumber();
 	public int edgeNumber();
 	public boolean areNeighbours(VertexType firstVertex, VertexType secondVertex);
+	public EdgeType getEdge(VertexType source, VertexType destination);
 	
 }

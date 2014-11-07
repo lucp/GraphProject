@@ -162,5 +162,14 @@ public class ListGraphTest {
 		assertTrue("are neighbours", listGraph.areAllNeighbours(vertex3, vertex2));
 		assertFalse("are not neighbours", listGraph.areAllNeighbours(vertex1, vertex3));
 	}
+	
+	@Test
+	public void getEdgeTest() {
+		assertEquals(listGraph.getEdge(vertex1, vertex2), edge1);
+		assertEquals(listGraph.getEdge(vertex2, vertex3), edge2);
+		assertNotEquals(listGraph.getEdge(vertex2, vertex1), edge1);
+		assertNull(listGraph.getEdge(vertex2, vertex1));
+		assertNull(listGraph.getEdge(vertex1, vertex3));
+	}
 
 }

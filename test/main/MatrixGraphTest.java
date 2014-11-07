@@ -163,5 +163,14 @@ public class MatrixGraphTest {
 		assertTrue("are neighbours", matrixGraph.areAllNeighbours(vertex3, vertex2));
 		assertFalse("are not neighbours", matrixGraph.areAllNeighbours(vertex1, vertex3));
 	}
+	
+	@Test
+	public void getEdgeTest() {
+		assertEquals(matrixGraph.getEdge(vertex1, vertex2), edge1);
+		assertEquals(matrixGraph.getEdge(vertex2, vertex3), edge2);
+		assertNotEquals(matrixGraph.getEdge(vertex2, vertex1), edge1);
+		assertNull(matrixGraph.getEdge(vertex2, vertex1));
+		assertNull(matrixGraph.getEdge(vertex1, vertex3));
+	}
 
 }

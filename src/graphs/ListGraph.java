@@ -239,4 +239,15 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 		}
 	}
 
+	@Override
+	public EdgeType getEdge(VertexType source, VertexType destination) {
+		Integer sourceIndex = this.verticies.get(source);
+		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
+			if (this.neighbourhood[sourceIndex].get(i).inVertex == destination){
+				return this.neighbourhood[sourceIndex].get(i).inEdge;
+			}
+		}
+		return null;
+	}
+
 }

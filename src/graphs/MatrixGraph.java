@@ -190,4 +190,9 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		else return false;
 	}
 
+	@Override
+	public EdgeType getEdge(VertexType source, VertexType destination) {
+		return this.edges[this.verticies.get(source)][this.verticies.get(destination)];
+	}
+
 }
