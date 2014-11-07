@@ -195,4 +195,13 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		return this.edges[this.verticies.get(source)][this.verticies.get(destination)];
 	}
 
+	@Override
+	public LinkedList<VertexType> getVerticies() {
+		LinkedList<VertexType> verticies = new LinkedList<VertexType>();
+		for (VertexType vertex : this.verticies.keySet()){
+			verticies.add(vertex);
+		}
+		return verticies;
+	}
+
 }

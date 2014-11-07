@@ -250,4 +250,13 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 		return null;
 	}
 
+	@Override
+	public LinkedList<VertexType> getVerticies() {
+		LinkedList<VertexType> verticies = new LinkedList<VertexType>();
+		for (VertexType vertex : this.verticies.keySet()){
+			verticies.add(vertex);
+		}
+		return verticies;
+	}
+
 }
