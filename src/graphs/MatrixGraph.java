@@ -130,9 +130,27 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		}
 		return neighbours;
 	}
+	
+	public LinkedList<VertexType> getAllNeighbours(VertexType vertex) {
+		LinkedList<VertexType> neighbours = new LinkedList<VertexType>();
+		for (VertexType potentialNeighbour : this.verticies.keySet()){
+			if (this.areAllNeighbours(vertex, potentialNeighbour)) neighbours.add(potentialNeighbour);
+		}
+		return neighbours;
+	}
 
 	@Override
 	public LinkedList<EdgeType> getIncidentEdges(VertexType vertex) {
+		LinkedList<EdgeType> incidentEdges = new LinkedList<EdgeType>();
+		Integer index = this.verticies.get(vertex);
+		for (int i = 0; i < this.matrixSize; i++){
+			EdgeType edge = this.edges[index][i];
+			if(edge != null) incidentEdges.add(edge);
+		}
+		return incidentEdges;
+	}
+	
+	public LinkedList<EdgeType> getAllIncidentEdges(VertexType vertex) {
 		LinkedList<EdgeType> incidentEdges = new LinkedList<EdgeType>();
 		Integer index = this.verticies.get(vertex);
 		for (int i = 0; i < this.matrixSize; i++){
@@ -162,6 +180,11 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 
 	@Override
 	public boolean areNeighbours(VertexType firstVertex, VertexType secondVertex) {
+		if (this.edges[this.verticies.get(firstVertex)][this.verticies.get(secondVertex)] != null) return true;
+		else return false;
+	}
+	
+	public boolean areAllNeighbours(VertexType firstVertex, VertexType secondVertex) {
 		if (this.edges[this.verticies.get(firstVertex)][this.verticies.get(secondVertex)] != null) return true;
 		else if (this.edges[this.verticies.get(secondVertex)][this.verticies.get(firstVertex)] != null) return true;
 		else return false;

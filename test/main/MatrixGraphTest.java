@@ -115,27 +115,53 @@ public class MatrixGraphTest {
 	
 	@Test
 	public void getNeighboursTest() {
-		assertTrue("neighbours", matrixGraph.getNeighbours(vertex2).contains(vertex1));
+		assertFalse("neighbours", matrixGraph.getNeighbours(vertex2).contains(vertex1));
 		assertTrue("neighbours", matrixGraph.getNeighbours(vertex1).contains(vertex2));
 		assertTrue("neighbours", matrixGraph.getNeighbours(vertex2).contains(vertex3));
 		assertFalse("not neighbours", matrixGraph.getNeighbours(vertex2).contains(vertex2));
 		assertFalse("not neighbours", matrixGraph.getNeighbours(vertex1).contains(vertex3));
 	}
+	
+	@Test
+	public void getAllNeighboursTest() {
+		assertTrue("neighbours", matrixGraph.getAllNeighbours(vertex2).contains(vertex1));
+		assertTrue("neighbours", matrixGraph.getAllNeighbours(vertex1).contains(vertex2));
+		assertTrue("neighbours", matrixGraph.getAllNeighbours(vertex2).contains(vertex3));
+		assertFalse("not neighbours", matrixGraph.getAllNeighbours(vertex2).contains(vertex2));
+		assertFalse("not neighbours", matrixGraph.getAllNeighbours(vertex1).contains(vertex3));
+	}
 
+	
 	@Test
 	public void getIncidentEdgesTest() {
-		assertTrue("incident edge", matrixGraph.getIncidentEdges(vertex2).contains(edge1));
+		assertFalse("incident edge", matrixGraph.getIncidentEdges(vertex2).contains(edge1));
 		assertTrue("incident edge", matrixGraph.getIncidentEdges(vertex2).contains(edge2));
 		assertTrue("incident edge", matrixGraph.getIncidentEdges(vertex1).contains(edge1));
 		assertFalse("not incident edge", matrixGraph.getIncidentEdges(vertex1).contains(edge2));
 	}
-
+	
+	@Test
+	public void getAllIncidentEdgesTest() {
+		assertTrue("incident edge", matrixGraph.getAllIncidentEdges(vertex2).contains(edge1));
+		assertTrue("incident edge", matrixGraph.getAllIncidentEdges(vertex2).contains(edge2));
+		assertTrue("incident edge", matrixGraph.getAllIncidentEdges(vertex1).contains(edge1));
+		assertFalse("not incident edge", matrixGraph.getAllIncidentEdges(vertex1).contains(edge2));
+	}
+	
 	@Test
 	public void areNeighboursTest() {
 		assertTrue("are neighbours", matrixGraph.areNeighbours(vertex1, vertex2));
 		assertTrue("are neighbours", matrixGraph.areNeighbours(vertex2, vertex3));
-		assertTrue("are neighbours", matrixGraph.areNeighbours(vertex3, vertex2));
+		assertFalse("are neighbours", matrixGraph.areNeighbours(vertex3, vertex2));
 		assertFalse("are not neighbours", matrixGraph.areNeighbours(vertex1, vertex3));
+	}
+	
+	@Test
+	public void areAllNeighboursTest() {
+		assertTrue("are neighbours", matrixGraph.areAllNeighbours(vertex1, vertex2));
+		assertTrue("are neighbours", matrixGraph.areAllNeighbours(vertex2, vertex3));
+		assertTrue("are neighbours", matrixGraph.areAllNeighbours(vertex3, vertex2));
+		assertFalse("are not neighbours", matrixGraph.areAllNeighbours(vertex1, vertex3));
 	}
 
 }

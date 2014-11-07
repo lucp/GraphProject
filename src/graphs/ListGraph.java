@@ -3,8 +3,6 @@ package graphs;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import com.sun.javafx.geom.Edge;
-
 public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeType> {
 
 	int listSize;
