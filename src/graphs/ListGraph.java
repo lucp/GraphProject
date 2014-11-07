@@ -135,6 +135,15 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
 			neighbours.add(this.neighbourhood[sourceIndex].get(i).inVertex);
 		}
+		return neighbours;
+	}
+	
+	public LinkedList<VertexType> getAllNeighbours(VertexType vertex) {
+		Integer sourceIndex = this.verticies.get(vertex);
+		LinkedList<VertexType> neighbours = new LinkedList<VertexType>();
+		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
+			neighbours.add(this.neighbourhood[sourceIndex].get(i).inVertex);
+		}
 		for (VertexType neighbour : this.verticies.keySet()){
 			if (neighbour != vertex){
 				sourceIndex = this.verticies.get(neighbour);
@@ -150,6 +159,15 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 
 	@Override
 	public LinkedList<EdgeType> getIncidentEdges(VertexType vertex) {
+		LinkedList<EdgeType> incidentEdges = new LinkedList<EdgeType>();
+		Integer sourceIndex = this.verticies.get(vertex);
+		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
+			incidentEdges.add(this.neighbourhood[sourceIndex].get(i).inEdge);
+		}
+		return incidentEdges;
+	}
+	
+	public LinkedList<EdgeType> getAllIncidentEdges(VertexType vertex) {
 		LinkedList<EdgeType> incidentEdges = new LinkedList<EdgeType>();
 		Integer sourceIndex = this.verticies.get(vertex);
 		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
@@ -186,6 +204,16 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 
 	@Override
 	public boolean areNeighbours(VertexType firstVertex, VertexType secondVertex) {
+		Integer sourceIndex = this.verticies.get(firstVertex);
+		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
+			if (this.neighbourhood[sourceIndex].get(i).inVertex == secondVertex){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public boolean areAllNeighbours(VertexType firstVertex, VertexType secondVertex) {
 		Integer sourceIndex = this.verticies.get(firstVertex);
 		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
 			if (this.neighbourhood[sourceIndex].get(i).inVertex == secondVertex){

@@ -116,26 +116,51 @@ public class ListGraphTest {
 	@Test
 	public void getNeighboursTest() {
 		assertTrue("neighbours", listGraph.getNeighbours(vertex1).contains(vertex2));
-		assertTrue("neighbours", listGraph.getNeighbours(vertex2).contains(vertex1));
+		assertFalse("neighbours", listGraph.getNeighbours(vertex2).contains(vertex1));
 		assertTrue("neighbours", listGraph.getNeighbours(vertex2).contains(vertex3));
 		assertFalse("not neighbours", listGraph.getNeighbours(vertex2).contains(vertex2));
 		assertFalse("not neighbours", listGraph.getNeighbours(vertex1).contains(vertex3));
+	}
+	
+	@Test
+	public void getAllNeighboursTest() {
+		assertTrue("neighbours", listGraph.getAllNeighbours(vertex1).contains(vertex2));
+		assertTrue("neighbours", listGraph.getAllNeighbours(vertex2).contains(vertex1));
+		assertTrue("neighbours", listGraph.getAllNeighbours(vertex2).contains(vertex3));
+		assertFalse("not neighbours", listGraph.getAllNeighbours(vertex2).contains(vertex2));
+		assertFalse("not neighbours", listGraph.getAllNeighbours(vertex1).contains(vertex3));
 	}
 
 	@Test
 	public void getIncidentEdgesTest() {
 		assertTrue("incident edge", listGraph.getIncidentEdges(vertex1).contains(edge1));
-		assertTrue("incident edge", listGraph.getIncidentEdges(vertex2).contains(edge1));
+		assertFalse("incident edge", listGraph.getIncidentEdges(vertex2).contains(edge1));
 		assertTrue("incident edge", listGraph.getIncidentEdges(vertex2).contains(edge2));
 		assertFalse("not incident edge", listGraph.getIncidentEdges(vertex1).contains(edge2));
+	}
+	
+	@Test
+	public void getAllIncidentEdgesTest() {
+		assertTrue("incident edge", listGraph.getAllIncidentEdges(vertex1).contains(edge1));
+		assertTrue("incident edge", listGraph.getAllIncidentEdges(vertex2).contains(edge1));
+		assertTrue("incident edge", listGraph.getAllIncidentEdges(vertex2).contains(edge2));
+		assertFalse("not incident edge", listGraph.getAllIncidentEdges(vertex1).contains(edge2));
 	}
 
 	@Test
 	public void areNeighboursTest() {
 		assertTrue("are neighbours", listGraph.areNeighbours(vertex1, vertex2));
 		assertTrue("are neighbours", listGraph.areNeighbours(vertex2, vertex3));
-		assertTrue("are neighbours", listGraph.areNeighbours(vertex3, vertex2));
+		assertFalse("are neighbours", listGraph.areNeighbours(vertex3, vertex2));
 		assertFalse("are not neighbours", listGraph.areNeighbours(vertex1, vertex3));
+	}
+	
+	@Test
+	public void areAllNeighboursTest() {
+		assertTrue("are neighbours", listGraph.areAllNeighbours(vertex1, vertex2));
+		assertTrue("are neighbours", listGraph.areAllNeighbours(vertex2, vertex3));
+		assertTrue("are neighbours", listGraph.areAllNeighbours(vertex3, vertex2));
+		assertFalse("are not neighbours", listGraph.areAllNeighbours(vertex1, vertex3));
 	}
 
 }
