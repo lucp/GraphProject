@@ -172,5 +172,13 @@ public class MatrixGraphTest {
 		assertNull(matrixGraph.getEdge(vertex2, vertex1));
 		assertNull(matrixGraph.getEdge(vertex1, vertex3));
 	}
+	
+	@Test
+	public void getVertexPairTest() {
+		assertEquals(matrixGraph.getVertexPair(edge1).inVertex, vertex1);
+		assertEquals(matrixGraph.getVertexPair(edge1).outVertex, vertex2);
+		assertEquals(matrixGraph.getVertexPair(edge2).inVertex, vertex2);
+		assertNotEquals(matrixGraph.getVertexPair(edge2).inVertex, vertex1);
+	}
 
 }

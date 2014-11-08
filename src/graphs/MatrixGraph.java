@@ -204,4 +204,22 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		return verticies;
 	}
 
+	@Override
+	public Entry<VertexType, EdgeType> getVertexPair(EdgeType edge) {
+		for (VertexType source : this.verticies.keySet()){
+			for (VertexType destination : this.verticies.keySet()){
+				if (this.getEdge(source, destination) == edge) {
+					return new Entry<VertexType, EdgeType>(source, destination, edge);
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public LinkedList<EdgeType> getEdges() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

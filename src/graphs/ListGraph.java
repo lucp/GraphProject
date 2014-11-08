@@ -259,4 +259,16 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 		return verticies;
 	}
 
+	@Override
+	public Entry<VertexType, EdgeType> getVertexPair(EdgeType edge) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LinkedList<EdgeType> getEdges() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
