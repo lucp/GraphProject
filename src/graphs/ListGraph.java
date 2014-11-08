@@ -5,6 +5,16 @@ import java.util.LinkedList;
 
 public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeType> {
 
+	@SuppressWarnings("hiding")
+	private class ListElement<VertexType, EdgeType>{
+		public VertexType inVertex;
+		public EdgeType inEdge;
+		public ListElement(VertexType vertex, EdgeType edge){
+			this.inVertex = vertex;
+			this.inEdge = edge;
+		}
+	}
+	
 	int listSize;
 	
 	LinkedList<ListElement<VertexType, EdgeType>>[] neighbourhood;
@@ -229,15 +239,7 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 		return false;
 	}
 	
-	@SuppressWarnings("hiding")
-	private class ListElement<VertexType, EdgeType>{
-		public VertexType inVertex;
-		public EdgeType inEdge;
-		public ListElement(VertexType vertex, EdgeType edge){
-			this.inVertex = vertex;
-			this.inEdge = edge;
-		}
-	}
+
 
 	@Override
 	public EdgeType getEdge(VertexType source, VertexType destination) {
@@ -261,14 +263,25 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 
 	@Override
 	public Entry<VertexType, EdgeType> getVertexPair(EdgeType edge) {
-		// TODO Auto-generated method stub
+		for (VertexType inVertex : this.verticies.keySet()){
+			for (ListElement<VertexType, EdgeType> element : this.neighbourhood[this.verticies.get(inVertex)]){
+				if (element.inEdge == edge){
+					return new Entry<VertexType, EdgeType>(inVertex, element.inVertex, element.inEdge);
+				}
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public LinkedList<EdgeType> getEdges() {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedList<EdgeType> list = new LinkedList<EdgeType>();
+		for (VertexType inVertex : this.verticies.keySet()){
+			for (ListElement<VertexType, EdgeType> element : this.neighbourhood[this.verticies.get(inVertex)]){
+				list.add(element.inEdge);
+			}
+		}
+		return list;
 	}
 
 }

@@ -180,5 +180,14 @@ public class MatrixGraphTest {
 		assertEquals(matrixGraph.getVertexPair(edge2).inVertex, vertex2);
 		assertNotEquals(matrixGraph.getVertexPair(edge2).inVertex, vertex1);
 	}
+	
+	@Test
+	public void getEdgesTest() {
+		assertTrue(matrixGraph.getEdges().contains(edge1));
+		assertTrue(matrixGraph.getEdges().contains(edge2));
+		assertFalse(matrixGraph.getEdges().contains(null));
+		Double edgetmp = new Double(-1);
+		assertFalse(matrixGraph.getEdges().contains(edgetmp));
+	}
 
 }

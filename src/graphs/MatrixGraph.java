@@ -218,8 +218,15 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 
 	@Override
 	public LinkedList<EdgeType> getEdges() {
-		// TODO Auto-generated method stub
-		return null;
+		LinkedList<EdgeType> edges = new LinkedList<EdgeType>();
+		for (VertexType source : this.verticies.keySet()){
+			for (VertexType destination : this.verticies.keySet()){
+				if (this.getEdge(source, destination) != null) {
+					edges.add(this.getEdge(source, destination));
+				}
+			}
+		}
+		return edges;
 	}
 
 }

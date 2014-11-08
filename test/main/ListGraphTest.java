@@ -172,4 +172,21 @@ public class ListGraphTest {
 		assertNull(listGraph.getEdge(vertex1, vertex3));
 	}
 
+	@Test
+	public void getVertexPairTest() {
+		assertEquals(listGraph.getVertexPair(edge1).inVertex, vertex1);
+		assertEquals(listGraph.getVertexPair(edge1).outVertex, vertex2);
+		assertEquals(listGraph.getVertexPair(edge2).inVertex, vertex2);
+		assertNotEquals(listGraph.getVertexPair(edge2).inVertex, vertex1);
+	}
+	
+	@Test
+	public void getEdgesTest() {
+		assertTrue(listGraph.getEdges().contains(edge1));
+		assertTrue(listGraph.getEdges().contains(edge2));
+		assertFalse(listGraph.getEdges().contains(null));
+		Double edgetmp = new Double(-1);
+		assertFalse(listGraph.getEdges().contains(edgetmp));
+	}
+	
 }

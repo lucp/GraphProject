@@ -1,6 +1,7 @@
 package algorithms;
 
-import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.Set;
 
 import graphs.Graph;
 
@@ -9,27 +10,56 @@ public class WarshallFloyd<VertexType, EdgeType> {
 	private VertexType[][] predecessors;
 	private Number[][] path;
 	private Graph<VertexType, EdgeType> graph;
-	private LinkedList<VertexType> verticies;
+	private HashMap<VertexType, Integer> verticies;
 	private int vertexNumber;
 	
 	@SuppressWarnings("unchecked")
 	public WarshallFloyd(Graph<VertexType, EdgeType> graph) {
 		this.graph = graph;
-		this.verticies = this.graph.getVerticies();
+		int index = 0;
+		for (VertexType vertex : this.graph.getVerticies()){
+			this.verticies.put(vertex, index);
+			index++;
+		}
 		this.vertexNumber = graph.vertexNumber();
 		this.predecessors = (VertexType[][]) new Object[this.vertexNumber][this.vertexNumber];
 		this.path = new Number[this.vertexNumber][this.vertexNumber];;
 	}
 	
 	public Number[][] execute(){
-		for (int i = 0; i < this.vertexNumber; i++){
-			for (int j = 0; j < this.vertexNumber; j++){
-				if (i == j) this.path[i][j] = 0;
-				else this.path[i][j] = null;
-				this.predecessors[i][j] = null;
+		Set<VertexType> vertexSet = this.verticies.keySet();
+		for (VertexType inVertex : vertexSet){
+			for (VertexType outVertex : vertexSet){
+				int inIndex = this.verticies.get(inVertex);
+				int outIndex = this.verticies.get(outVertex);
+				EdgeType edge = this.graph.getEdge(inVertex, outVertex);
+				if (inVertex == outVertex){
+					this.path[inIndex][outIndex] = 0;
+				}
+				else if (edge != null){
+					this.path[inIndex][outIndex] = (Number) edge;
+					this.predecessors[inIndex][outIndex] = inVertex;
+				}
+				else {
+					this.path[inIndex][outIndex] = null;
+					this.predecessors[inIndex][outIndex] = null;
+				}
 			}
 		}
-		return path;
+		for (VertexType midVertex : vertexSet){
+			for (VertexType inVertex : vertexSet){
+				for (VertexType outVertex : vertexSet){
+					int midIndex = this.verticies.get(midVertex);
+					int inIndex = this.verticies.get(inVertex);
+					int outIndex = this.verticies.get(outVertex);
+					EdgeType edge = this.graph.getEdge(inVertex, outVertex);
+//					if (path[inIndex][outIndex] > path[inIndex][midIndex] + path[midIndex][outIndex]){
+//						TODO
+//					}
+				}				
+			}
+		}
+		return this.path;
 	}
 	
 }
