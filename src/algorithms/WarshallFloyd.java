@@ -5,7 +5,7 @@ import java.util.Set;
 
 import graphs.Graph;
 
-public class WarshallFloyd<VertexType, EdgeType> {
+public class WarshallFloyd<VertexType, EdgeType extends Number> {
 
 	private VertexType[][] predecessors;
 	private Number[][] path;
@@ -17,13 +17,14 @@ public class WarshallFloyd<VertexType, EdgeType> {
 	public WarshallFloyd(Graph<VertexType, EdgeType> graph) {
 		this.graph = graph;
 		int index = 0;
+		this.verticies = new HashMap<VertexType, Integer>();
 		for (VertexType vertex : this.graph.getVerticies()){
 			this.verticies.put(vertex, index);
 			index++;
 		}
 		this.vertexNumber = graph.vertexNumber();
 		this.predecessors = (VertexType[][]) new Object[this.vertexNumber][this.vertexNumber];
-		this.path = new Number[this.vertexNumber][this.vertexNumber];;
+		this.path = new Number[this.vertexNumber][this.vertexNumber];
 	}
 	
 	public Number[][] execute(){
@@ -37,11 +38,11 @@ public class WarshallFloyd<VertexType, EdgeType> {
 					this.path[inIndex][outIndex] = 0;
 				}
 				else if (edge != null){
-					this.path[inIndex][outIndex] = (Number) edge;
+					this.path[inIndex][outIndex] = edge;
 					this.predecessors[inIndex][outIndex] = inVertex;
 				}
 				else {
-					this.path[inIndex][outIndex] = null;
+					this.path[inIndex][outIndex] = Double.MAX_VALUE;
 					this.predecessors[inIndex][outIndex] = null;
 				}
 			}
@@ -52,10 +53,10 @@ public class WarshallFloyd<VertexType, EdgeType> {
 					int midIndex = this.verticies.get(midVertex);
 					int inIndex = this.verticies.get(inVertex);
 					int outIndex = this.verticies.get(outVertex);
-					EdgeType edge = this.graph.getEdge(inVertex, outVertex);
-//					if (path[inIndex][outIndex] > path[inIndex][midIndex] + path[midIndex][outIndex]){
-//						TODO
-//					}
+					if (this.path[inIndex][outIndex].doubleValue() > this.path[inIndex][midIndex].doubleValue() + this.path[midIndex][outIndex].doubleValue()){
+						this.path[inIndex][outIndex] = this.path[inIndex][midIndex].doubleValue() + this.path[midIndex][outIndex].doubleValue();
+						this.predecessors[inIndex][outIndex] = this.predecessors[midIndex][outIndex];
+					}
 				}				
 			}
 		}
