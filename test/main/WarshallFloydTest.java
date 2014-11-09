@@ -33,16 +33,18 @@ public class WarshallFloydTest {
 		warshallFloyd.execute();
 		long stopTime = System.currentTimeMillis();
 		long elapsedTime = stopTime - startTime;
-		System.out.println("Time: " + elapsedTime);
-		printPath(109, 609, warshallFloyd);
+		System.out.println("Time: " + new Float(elapsedTime)/1000);
+//		System.out.println(matrixGraph);
+		printPath(matrixGraph.getVertexByValue(109), matrixGraph.getVertexByValue(609), warshallFloyd);
 		
 		warshallFloyd = new WarshallFloyd<Integer, Double>(listGraph);
 		startTime = System.currentTimeMillis();		
 		warshallFloyd.execute();
 		stopTime = System.currentTimeMillis();
 		elapsedTime = stopTime - startTime;
-		System.out.println("Time: " + elapsedTime);
-		printPath(109, 609, warshallFloyd);
+		System.out.println("Time: " + new Float(elapsedTime)/1000);
+//		System.out.println(listGraph);
+		printPath(listGraph.getVertexByValue(109), listGraph.getVertexByValue(609), warshallFloyd);
 		
 	}
 	

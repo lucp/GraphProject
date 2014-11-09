@@ -8,6 +8,7 @@ public interface Graph<VertexType, EdgeType> {
 	public void deleteVertex(VertexType vertex);
 	public LinkedList<VertexType> getVerticies();
 	public Entry<VertexType, EdgeType> getVertexPair(EdgeType edge);
+	public VertexType getVertexByValue(VertexType value);
 	public void addEdge(VertexType source, VertexType destination, EdgeType edge);
 	public void deleteEdge(VertexType source, VertexType destination);
 	public EdgeType getEdge(VertexType source, VertexType destination);

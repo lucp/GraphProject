@@ -228,16 +228,24 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		}
 		return edges;
 	}
+	
+	@Override
+	public VertexType getVertexByValue(VertexType value) {
+		for (VertexType vertex : this.verticies.keySet()){
+			if (vertex.equals(value)) return vertex;
+		}
+		return null;
+	}
 
 	@Override
 	public String toString() {
 		String matrixGraphString = new String();
-		for (VertexType vertex : this.verticies.keySet()){
-			matrixGraphString += vertex.toString() + ":\t";
-			int index = this.verticies.get(vertex);
-			for (int i = 0; i < this.matrixSize; i++){
-				if (this.edges[index][i] != null) {
-					matrixGraphString += this.edges[index][i].toString() + "\t";
+		for (VertexType inVertex : this.verticies.keySet()){
+			matrixGraphString += inVertex.toString() + ":\t";
+			for (VertexType outVertex : this.verticies.keySet()){
+				EdgeType edge = this.getEdge(inVertex, outVertex);
+				if (edge != null) {
+					matrixGraphString += edge.toString() + "\t";
 				}
 				else {
 					matrixGraphString += "X\t";

@@ -285,6 +285,14 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 	}
 	
 	@Override
+	public VertexType getVertexByValue(VertexType value) {
+		for (VertexType vertex : this.verticies.keySet()){
+			if (vertex.equals(value)) return vertex;
+		}
+		return null;
+	}
+	
+	@Override
 	public String toString() {
 		String listGraphString = new String();
 		for (VertexType vertex : this.verticies.keySet()){
