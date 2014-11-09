@@ -62,5 +62,13 @@ public class WarshallFloyd<VertexType, EdgeType extends Number> {
 		}
 		return this.path;
 	}
+
+	public Number getPath(VertexType source, VertexType destination) {
+		return this.path[this.verticies.get(source)][this.verticies.get(destination)];
+	}
+
+	public VertexType getPredecessor(VertexType source, VertexType destination) {
+		return this.predecessors[this.verticies.get(source)][this.verticies.get(destination)];
+	}
 	
 }
