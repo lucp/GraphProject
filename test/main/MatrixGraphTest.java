@@ -189,5 +189,10 @@ public class MatrixGraphTest {
 		Double edgetmp = new Double(-1);
 		assertFalse(matrixGraph.getEdges().contains(edgetmp));
 	}
+	
+	@Test
+	public void toStringTest() {
+		System.out.println(this.matrixGraph.toString());
+	}
 
 }

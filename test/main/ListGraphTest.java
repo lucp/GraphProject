@@ -189,4 +189,9 @@ public class ListGraphTest {
 		assertFalse(listGraph.getEdges().contains(edgetmp));
 	}
 	
+	@Test
+	public void toStringTest() {
+		System.out.println(this.listGraph.toString());
+	}
+	
 }

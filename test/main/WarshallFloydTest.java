@@ -3,8 +3,11 @@ package main;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.LinkedList;
 
 import factories.GraphIntegerDoubleFactory;
+import graphs.Entry;
+import graphs.ListGraph;
 import graphs.MatrixGraph;
 
 import org.junit.Test;
@@ -16,13 +19,31 @@ public class WarshallFloydTest {
 	
 	@Test
 	public void executeTest() throws IOException {
+		String filepath = "res/duzy_graf.txt";		
 		GraphIntegerDoubleFactory factory = new GraphIntegerDoubleFactory();
 		GraphFileReader<Integer, Double> graphReader = new GraphFileReader<Integer, Double>(factory);
-		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(graphReader.readGraphFile("res/duzy_graf.txt"));
+		
+		LinkedList<Entry<Integer, Double>> entryList = graphReader.readGraphFile(filepath);
+		
+		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(entryList);
+		ListGraph<Integer, Double> listGraph = new ListGraph<Integer, Double>(entryList);
+		
 		WarshallFloyd<Integer, Double> warshallFloyd = new WarshallFloyd<Integer, Double>(matrixGraph);
-		Number[][] path = warshallFloyd.execute();
-		assertEquals(path[109][609].doubleValue(), 18.0, 0.1);
+		long startTime = System.currentTimeMillis();
+		warshallFloyd.execute();
+		long stopTime = System.currentTimeMillis();
+		long elapsedTime = stopTime - startTime;
+		System.out.println("Time: " + elapsedTime);
 		printPath(109, 609, warshallFloyd);
+		
+		warshallFloyd = new WarshallFloyd<Integer, Double>(listGraph);
+		startTime = System.currentTimeMillis();		
+		warshallFloyd.execute();
+		stopTime = System.currentTimeMillis();
+		elapsedTime = stopTime - startTime;
+		System.out.println("Time: " + elapsedTime);
+		printPath(109, 609, warshallFloyd);
+		
 	}
 	
 	public void printDistances(Number[][] path){

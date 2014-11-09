@@ -283,5 +283,19 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 		}
 		return list;
 	}
+	
+	@Override
+	public String toString() {
+		String listGraphString = new String();
+		for (VertexType vertex : this.verticies.keySet()){
+			listGraphString += vertex.toString() + ":\t";
+			int index = this.verticies.get(vertex);
+			for (ListElement entry : this.neighbourhood[index]){
+				listGraphString += "(" + entry.inEdge.toString() + "," + entry.inVertex.toString() + ")\t";
+			}
+			listGraphString += "\n";
+		}
+		return listGraphString;
+	}
 
 }

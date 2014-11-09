@@ -229,4 +229,23 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		return edges;
 	}
 
+	@Override
+	public String toString() {
+		String matrixGraphString = new String();
+		for (VertexType vertex : this.verticies.keySet()){
+			matrixGraphString += vertex.toString() + ":\t";
+			int index = this.verticies.get(vertex);
+			for (int i = 0; i < this.matrixSize; i++){
+				if (this.edges[index][i] != null) {
+					matrixGraphString += this.edges[index][i].toString() + "\t";
+				}
+				else {
+					matrixGraphString += "X\t";
+				}
+			}
+			matrixGraphString += "\n";
+		}
+		return matrixGraphString;
+	}
+
 }
