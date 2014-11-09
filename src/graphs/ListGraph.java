@@ -48,6 +48,7 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 			this.neighbourhood[i] =  new LinkedList<ListElement<VertexType, EdgeType>>();
 		}
 		for (Entry<VertexType, EdgeType> entry : fileEntries){
+			
 			this.neighbourhood[this.verticies.get(entry.inVertex)].add(new ListElement<VertexType, EdgeType>(entry.outVertex, entry.midEdge));
 		}
 	}
@@ -298,7 +299,7 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 		for (VertexType vertex : this.verticies.keySet()){
 			listGraphString += vertex.toString() + ":\t";
 			int index = this.verticies.get(vertex);
-			for (ListElement entry : this.neighbourhood[index]){
+			for (ListElement<VertexType, EdgeType> entry : this.neighbourhood[index]){
 				listGraphString += "(" + entry.inEdge.toString() + "," + entry.inVertex.toString() + ")\t";
 			}
 			listGraphString += "\n";

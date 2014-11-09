@@ -3,6 +3,7 @@ package main;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import factories.GraphIntegerDoubleFactory;
@@ -19,6 +20,7 @@ public class WarshallFloydTest {
 	
 	@Test
 	public void executeTest() throws IOException {
+		
 		String filepath = "res/duzy_graf.txt";		
 		GraphIntegerDoubleFactory factory = new GraphIntegerDoubleFactory();
 		GraphFileReader<Integer, Double> graphReader = new GraphFileReader<Integer, Double>(factory);
@@ -35,7 +37,8 @@ public class WarshallFloydTest {
 		long elapsedTime = stopTime - startTime;
 		System.out.println("Time: " + new Float(elapsedTime)/1000);
 //		System.out.println(matrixGraph);
-		printPath(matrixGraph.getVertexByValue(109), matrixGraph.getVertexByValue(609), warshallFloyd);
+//		System.out.println(warshallFloyd);
+		printPath(matrixGraph.getVertexByValue(106), matrixGraph.getVertexByValue(609), warshallFloyd);
 		
 		warshallFloyd = new WarshallFloyd<Integer, Double>(listGraph);
 		startTime = System.currentTimeMillis();		
@@ -44,7 +47,8 @@ public class WarshallFloydTest {
 		elapsedTime = stopTime - startTime;
 		System.out.println("Time: " + new Float(elapsedTime)/1000);
 //		System.out.println(listGraph);
-		printPath(listGraph.getVertexByValue(109), listGraph.getVertexByValue(609), warshallFloyd);
+//		System.out.println(warshallFloyd);
+		printPath(listGraph.getVertexByValue(106), listGraph.getVertexByValue(609), warshallFloyd);
 		
 	}
 	

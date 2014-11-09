@@ -17,6 +17,7 @@ public class GraphFileReader<VertexType, EdgeType> {
 	}
 	
 	public LinkedList<Entry<VertexType, EdgeType>> readGraphFile(String filePath) throws IOException{
+		LinkedList<VertexType> verticies = new LinkedList<VertexType>();
 		LinkedList<Entry<VertexType, EdgeType>> entries = new LinkedList<Entry<VertexType, EdgeType>>();
 		BufferedReader reader = null;
 		try {
@@ -28,7 +29,22 @@ public class GraphFileReader<VertexType, EdgeType> {
 				entry[0] = entry[0].trim();
 				entry[1] = entry[1].trim();
 				entry[2] = entry[2].trim();
-				entries.add(new Entry<VertexType, EdgeType>(factory.createVertex(entry[0]),factory.createVertex(entry[1]),factory.createEdge(entry[2])));
+				VertexType inVertex = factory.createVertex(entry[0]);
+				if (!verticies.contains(inVertex)) {
+					verticies.add(inVertex);
+				}
+				else{
+					inVertex = verticies.get(verticies.indexOf(inVertex));
+				}
+				VertexType outVertex = factory.createVertex(entry[1]);
+				if (!verticies.contains(outVertex)) {
+					verticies.add(outVertex);
+				}
+				else{
+					outVertex = verticies.get(verticies.indexOf(outVertex));
+				}
+				EdgeType edge = factory.createEdge(entry[2]);		
+				entries.add(new Entry<VertexType, EdgeType>(inVertex , outVertex, edge));
 			}
 		}
 		catch (IOException exception) {

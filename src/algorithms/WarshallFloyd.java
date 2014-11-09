@@ -35,7 +35,7 @@ public class WarshallFloyd<VertexType, EdgeType extends Number> {
 				int outIndex = this.verticies.get(outVertex);
 				EdgeType edge = this.graph.getEdge(inVertex, outVertex);
 				if (inVertex == outVertex){
-					this.path[inIndex][outIndex] = 0;
+					this.path[inIndex][outIndex] = 0d;
 				}
 				else if (edge != null){
 					this.path[inIndex][outIndex] = edge;
@@ -69,6 +69,22 @@ public class WarshallFloyd<VertexType, EdgeType extends Number> {
 
 	public VertexType getPredecessor(VertexType source, VertexType destination) {
 		return this.predecessors[this.verticies.get(source)][this.verticies.get(destination)];
+	}
+	
+	@Override
+	public String toString() {
+		String listGraphString = new String();
+		for (VertexType inVertex : this.verticies.keySet()){
+			listGraphString += inVertex.toString() + ":\t";
+			int inIndex = this.verticies.get(inVertex);
+			for (VertexType outVertex : this.verticies.keySet()){
+				int outIndex = this.verticies.get(outVertex);
+				if (this.path[inIndex][outIndex].doubleValue() != Double.MAX_VALUE) listGraphString += this.path[inIndex][outIndex] + "\t";
+				else listGraphString += "Inf\t";
+			}
+			listGraphString += "\n";
+		}
+		return listGraphString;
 	}
 	
 }
