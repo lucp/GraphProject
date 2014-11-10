@@ -47,12 +47,9 @@ public class WarshallFloyd<VertexType, EdgeType extends Number> {
 				}
 			}
 		}
-		for (VertexType midVertex : vertexSet){
-			for (VertexType inVertex : vertexSet){
-				for (VertexType outVertex : vertexSet){
-					int midIndex = this.verticies.get(midVertex);
-					int inIndex = this.verticies.get(inVertex);
-					int outIndex = this.verticies.get(outVertex);
+		for (int midIndex = 0; midIndex < this.vertexNumber; midIndex++){
+			for (int inIndex = 0; inIndex < this.vertexNumber; inIndex++){
+				for (int outIndex = 0; outIndex < this.vertexNumber; outIndex++){
 					if (this.path[inIndex][outIndex].doubleValue() > this.path[inIndex][midIndex].doubleValue() + this.path[midIndex][outIndex].doubleValue()){
 						this.path[inIndex][outIndex] = this.path[inIndex][midIndex].doubleValue() + this.path[midIndex][outIndex].doubleValue();
 						this.predecessors[inIndex][outIndex] = this.predecessors[midIndex][outIndex];

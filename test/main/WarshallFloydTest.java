@@ -38,7 +38,7 @@ public class WarshallFloydTest {
 		System.out.println("Time: " + new Float(elapsedTime)/1000);
 //		System.out.println(matrixGraph);
 //		System.out.println(warshallFloyd);
-		printPath(matrixGraph.getVertexByValue(106), matrixGraph.getVertexByValue(609), warshallFloyd);
+		printPath(matrixGraph.getVertexByValue(109), matrixGraph.getVertexByValue(609), warshallFloyd);
 		
 		warshallFloyd = new WarshallFloyd<Integer, Double>(listGraph);
 		startTime = System.currentTimeMillis();		
@@ -48,7 +48,7 @@ public class WarshallFloydTest {
 		System.out.println("Time: " + new Float(elapsedTime)/1000);
 //		System.out.println(listGraph);
 //		System.out.println(warshallFloyd);
-		printPath(listGraph.getVertexByValue(106), listGraph.getVertexByValue(609), warshallFloyd);
+		printPath(listGraph.getVertexByValue(109), listGraph.getVertexByValue(609), warshallFloyd);
 		
 	}
 	
