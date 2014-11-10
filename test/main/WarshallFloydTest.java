@@ -3,10 +3,9 @@ package main;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.LinkedList;
 
-import factories.GraphIntegerDoubleFactory;
+import factories.GraphIntegerIntegerFactory;
 import graphs.Entry;
 import graphs.ListGraph;
 import graphs.MatrixGraph;
@@ -20,17 +19,19 @@ public class WarshallFloydTest {
 	
 	@Test
 	public void executeTest() throws IOException {
+		System.out.println("Warshall-Floyd\n");
 		
 		String filepath = "res/duzy_graf.txt";		
-		GraphIntegerDoubleFactory factory = new GraphIntegerDoubleFactory();
-		GraphFileReader<Integer, Double> graphReader = new GraphFileReader<Integer, Double>(factory);
+		GraphIntegerIntegerFactory factory = new GraphIntegerIntegerFactory();
+		GraphFileReader<Integer, Integer> graphReader = new GraphFileReader<Integer, Integer>(factory);
 		
-		LinkedList<Entry<Integer, Double>> entryList = graphReader.readGraphFile(filepath);
+		LinkedList<Entry<Integer, Integer>> entryList = graphReader.readGraphFile(filepath);
 		
-		MatrixGraph<Integer, Double> matrixGraph = new MatrixGraph<Integer, Double>(entryList);
-		ListGraph<Integer, Double> listGraph = new ListGraph<Integer, Double>(entryList);
+		MatrixGraph<Integer, Integer> matrixGraph = new MatrixGraph<Integer, Integer>(entryList);
+		ListGraph<Integer, Integer> listGraph = new ListGraph<Integer, Integer>(entryList);
 		
-		WarshallFloyd<Integer, Double> warshallFloyd = new WarshallFloyd<Integer, Double>(matrixGraph);
+		System.out.println("- Matrix Graph -");
+		WarshallFloyd<Integer, Integer> warshallFloyd = new WarshallFloyd<Integer, Integer>(matrixGraph);
 		long startTime = System.currentTimeMillis();
 		warshallFloyd.execute();
 		long stopTime = System.currentTimeMillis();
@@ -40,7 +41,8 @@ public class WarshallFloydTest {
 //		System.out.println(warshallFloyd);
 		printPath(matrixGraph.getVertexByValue(109), matrixGraph.getVertexByValue(609), warshallFloyd);
 		
-		warshallFloyd = new WarshallFloyd<Integer, Double>(listGraph);
+		System.out.println("\n- List Graph -");
+		warshallFloyd = new WarshallFloyd<Integer, Integer>(listGraph);
 		startTime = System.currentTimeMillis();		
 		warshallFloyd.execute();
 		stopTime = System.currentTimeMillis();
@@ -55,21 +57,22 @@ public class WarshallFloydTest {
 	public void printDistances(Number[][] path){
 		for (int i = 0; i < path.length; i++){
 			for (int j = 0; j < path.length; j++){
-				if (path[i][j].doubleValue() == Double.MAX_VALUE) System.out.print("Inf\t");
+				if (path[i][j].doubleValue() == Integer.MAX_VALUE) System.out.print("Inf\t");
 				else System.out.print(path[i][j]+"\t");
 			}
 			System.out.println();
 		}
 	}
 	
-	public void printPath(Integer source, Integer destination, WarshallFloyd<Integer, Double> warshallFloyd){
+	public void printPath(Integer source, Integer destination, WarshallFloyd<Integer, Integer> warshallFloyd){
 		Integer point = destination;
+		System.out.print("Path: ");
 		while (!point.equals(source)){
 			System.out.print(point + " <- ");
 			point = warshallFloyd.getPredecessor(source, point);
 		}
 		System.out.println(point);
-		System.out.println("distance: " + warshallFloyd.getPath(source, destination));
+		System.out.println("Distance: " + warshallFloyd.getPath(source, destination));
 	}
 
 }

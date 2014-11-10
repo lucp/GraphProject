@@ -5,7 +5,7 @@ import java.util.Set;
 
 import graphs.Graph;
 
-public class WarshallFloyd<VertexType, EdgeType extends Number> {
+public class WarshallFloyd<VertexType, EdgeType extends Number & Comparable<EdgeType>> {
 
 	private VertexType[][] predecessors;
 	private Number[][] path;
