@@ -35,8 +35,8 @@ public class WarshallFloydTest {
 		long startTime = System.currentTimeMillis();
 		warshallFloyd.execute();
 		long stopTime = System.currentTimeMillis();
-		long elapsedTime = stopTime - startTime;
-		System.out.println("Time: " + new Float(elapsedTime)/1000);
+		long elapsedTimeM = stopTime - startTime;
+		System.out.println("Time: " + new Float(elapsedTimeM)/1000);
 //		System.out.println(matrixGraph);
 //		System.out.println(warshallFloyd);
 		printPath(matrixGraph.getVertexByValue(109), matrixGraph.getVertexByValue(609), warshallFloyd);
@@ -46,12 +46,14 @@ public class WarshallFloydTest {
 		startTime = System.currentTimeMillis();		
 		warshallFloyd.execute();
 		stopTime = System.currentTimeMillis();
-		elapsedTime = stopTime - startTime;
-		System.out.println("Time: " + new Float(elapsedTime)/1000);
+		long elapsedTimeL = stopTime - startTime;
+		System.out.println("Time: " + new Float(elapsedTimeL)/1000);
 //		System.out.println(listGraph);
 //		System.out.println(warshallFloyd);
 		printPath(listGraph.getVertexByValue(109), listGraph.getVertexByValue(609), warshallFloyd);
 		
+		System.out.println("\nR: " + new Double(elapsedTimeL)/new Double(elapsedTimeM));
+	
 	}
 	
 	public void printDistances(Number[][] path){
