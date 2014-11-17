@@ -17,15 +17,18 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 	
 	int listSize;
 	
-	LinkedList<ListElement<VertexType, EdgeType>>[] neighbourhood;
+	private LinkedList<ListElement<VertexType, EdgeType>>[] neighbourhood;
 	
 	private HashMap<VertexType, Integer> verticies;
+	
+	private LinkedList<Entry<VertexType, EdgeType>> entries;
 	
 	@SuppressWarnings("unchecked")
 	public ListGraph(int listSize){
 		this.listSize = listSize;
 		this.neighbourhood = new LinkedList[this.listSize];
 		this.verticies = new HashMap<VertexType, Integer>();
+		this.entries = new LinkedList<Entry<VertexType, EdgeType>>();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -51,6 +54,7 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 			
 			this.neighbourhood[this.verticies.get(entry.inVertex)].add(new ListElement<VertexType, EdgeType>(entry.outVertex, entry.midEdge));
 		}
+		this.entries = fileEntries;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -75,6 +79,7 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 		for (Entry<VertexType, EdgeType> entry : fileEntries){
 			this.neighbourhood[this.verticies.get(entry.inVertex)].add(new ListElement<VertexType, EdgeType>(entry.outVertex, entry.midEdge));
 		}
+		this.entries = fileEntries;
 	}
 	
 	public int getListSize(){
@@ -305,6 +310,11 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 			listGraphString += "\n";
 		}
 		return listGraphString;
+	}
+
+	@Override
+	public LinkedList<Entry<VertexType, EdgeType>> getAllEntries() {
+		return this.entries;
 	}
 
 }

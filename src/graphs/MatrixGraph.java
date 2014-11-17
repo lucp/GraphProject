@@ -11,11 +11,14 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 	
 	private HashMap<VertexType, Integer> verticies;
 	
+	private LinkedList<Entry<VertexType, EdgeType>> entries;
+	
 	@SuppressWarnings("unchecked")
 	public MatrixGraph(int matrixSize){
 		this.matrixSize = matrixSize;
 		this.edges = (EdgeType[][]) new Object[matrixSize][matrixSize];
 		this.verticies = new HashMap<VertexType, Integer>();
+		this.entries = new LinkedList<Entry<VertexType, EdgeType>>();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -37,6 +40,7 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		for (Entry<VertexType, EdgeType> entry : fileEntries){
 			this.edges[this.verticies.get(entry.inVertex)][this.verticies.get(entry.outVertex)] = entry.midEdge;
 		}
+		this.entries = fileEntries;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -58,6 +62,7 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		for (Entry<VertexType, EdgeType> entry : fileEntries){
 			this.edges[this.verticies.get(entry.inVertex)][this.verticies.get(entry.outVertex)] = entry.midEdge;
 		}
+		this.entries = fileEntries;
 	}
 
 	public int getMatrixSize() {
@@ -254,6 +259,11 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 			matrixGraphString += "\n";
 		}
 		return matrixGraphString;
+	}
+
+	@Override
+	public LinkedList<Entry<VertexType, EdgeType>> getAllEntries() {
+		return this.entries;
 	}
 
 }
