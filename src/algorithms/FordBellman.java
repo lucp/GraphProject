@@ -24,15 +24,16 @@ public class FordBellman<VertexType, EdgeType extends Number & Comparable<EdgeTy
 			index++;
 		}
 		this.vertexNumber = graph.vertexNumber();
+		this.weight = new Number[this.vertexNumber];
 		this.predecessor = (VertexType[]) new Object[this.vertexNumber];
 	}
 
-	public Number[] getWeight() {
-		return weight;
+	public Number getWeight(VertexType vertex) {
+		return this.weight[this.verticies.get(vertex)];
 	}
 
-	public VertexType[] getPredecessor() {
-		return predecessor;
+	public VertexType getPredecessor(VertexType vertex) {
+		return this.predecessor[this.verticies.get(vertex)];
 	}
 
 	public void execute(VertexType source){
@@ -51,12 +52,27 @@ public class FordBellman<VertexType, EdgeType extends Number & Comparable<EdgeTy
 						int outIndex = this.verticies.get(outVertex);
 						if (this.weight[inIndex].doubleValue() + edge.doubleValue() < this.weight[outIndex].doubleValue()){
 							this.weight[outIndex] = this.weight[inIndex].doubleValue() + edge.doubleValue();
-							this.predecessor[outIndex] = outVertex;
+							this.predecessor[outIndex] = inVertex;
 						}
 					}
 				}
 			}
 		}
+	}
+	
+	@Override
+	public String toString() {
+		String fordBellmanString = new String("predecessor: [");
+		for (int i = 0; i < this.vertexNumber; i++){
+			fordBellmanString += this.predecessor[i] + "\t";
+		}
+		fordBellmanString += "]\nweight: [";
+		for (int i = 0; i < this.vertexNumber; i++){
+			if (this.weight[i].doubleValue() == Double.MAX_VALUE) fordBellmanString += "Inf\t";
+			else fordBellmanString += this.weight[i] + "\t";
+		}
+		fordBellmanString += "]\n";
+		return fordBellmanString;
 	}
 	
 }
