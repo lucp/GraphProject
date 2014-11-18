@@ -2,6 +2,7 @@ package graphs;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeType> {
 
@@ -21,14 +22,11 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 	
 	private HashMap<VertexType, Integer> verticies;
 	
-	private LinkedList<Entry<VertexType, EdgeType>> entries;
-	
 	@SuppressWarnings("unchecked")
 	public ListGraph(int listSize){
 		this.listSize = listSize;
 		this.neighbourhood = new LinkedList[this.listSize];
 		this.verticies = new HashMap<VertexType, Integer>();
-		this.entries = new LinkedList<Entry<VertexType, EdgeType>>();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -54,7 +52,6 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 			
 			this.neighbourhood[this.verticies.get(entry.inVertex)].add(new ListElement<VertexType, EdgeType>(entry.outVertex, entry.midEdge));
 		}
-		this.entries = fileEntries;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -79,7 +76,6 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 		for (Entry<VertexType, EdgeType> entry : fileEntries){
 			this.neighbourhood[this.verticies.get(entry.inVertex)].add(new ListElement<VertexType, EdgeType>(entry.outVertex, entry.midEdge));
 		}
-		this.entries = fileEntries;
 	}
 	
 	public int getListSize(){
@@ -314,7 +310,15 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 
 	@Override
 	public LinkedList<Entry<VertexType, EdgeType>> getAllEntries() {
-		return this.entries;
+		LinkedList<Entry<VertexType, EdgeType>> entries =  new LinkedList<Entry<VertexType,EdgeType>>();
+		for (Map.Entry<VertexType, Integer> verticiesEntry : this.verticies.entrySet()){
+			Integer inIndex = verticiesEntry.getValue();
+			VertexType inVertex = verticiesEntry.getKey();
+			for (ListElement<VertexType, EdgeType> listElement : this.neighbourhood[inIndex]){
+				entries.add(new Entry<VertexType, EdgeType>(inVertex, listElement.inVertex, listElement.inEdge));
+			}
+		}
+		return entries;
 	}
 
 }

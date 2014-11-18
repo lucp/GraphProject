@@ -40,7 +40,7 @@ public class FordBellmanTest {
 		long stopTime = System.currentTimeMillis();
 		long elapsedTimeM = stopTime - startTime;
 		System.out.println("Time: " + new Float(elapsedTimeM)/1000);
-		System.out.println(fordBellman);
+//		System.out.println(fordBellman);
 		printPath(inVertex, outVertex, fordBellman);
 		
 		System.out.println("\n- List Graph -");
@@ -50,7 +50,7 @@ public class FordBellmanTest {
 		stopTime = System.currentTimeMillis();
 		long elapsedTimeL = stopTime - startTime;
 		System.out.println("Time: " + new Float(elapsedTimeL)/1000);
-		System.out.println(fordBellman);
+//		System.out.println(fordBellman);
 		printPath(inVertex, outVertex, fordBellman);
 		
 		System.out.println("\nR: " + new Double(elapsedTimeL)/new Double(elapsedTimeM));
@@ -58,7 +58,7 @@ public class FordBellmanTest {
 	}
 	
 	public void printDistance(Integer source, Integer destination, FordBellman<Integer, Integer> fordBellman){
-		System.out.println(fordBellman.getWeight(destination));
+		System.out.println("Distance: " + fordBellman.getWeight(destination));
 	}
 	
 	public void printPath(Integer source, Integer destination, FordBellman<Integer, Integer> fordBellman){
@@ -69,6 +69,7 @@ public class FordBellmanTest {
 			point = fordBellman.getPredecessor(point);
 		}
 		System.out.println(source);
+		printDistance(source, destination, fordBellman);
 	}
 
 }
