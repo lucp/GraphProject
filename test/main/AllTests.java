@@ -8,7 +8,7 @@ import algorithms.WarshallFloyd;
 
 @RunWith(Suite.class)
 @SuiteClasses({ GraphFileReaderTest.class, GraphObjectFactoryTest.class,
-		MatrixGraphTest.class, ListGraphTest.class, WarshallFloyd.class })
+		MatrixGraphTest.class, ListGraphTest.class, WarshallFloydTest.class, FordBellmanTest.class })
 public class AllTests {
 
 }
