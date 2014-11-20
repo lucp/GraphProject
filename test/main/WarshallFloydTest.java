@@ -30,6 +30,11 @@ public class WarshallFloydTest {
 		MatrixGraph<Integer, Integer> matrixGraph = new MatrixGraph<Integer, Integer>(entryList);
 		ListGraph<Integer, Integer> listGraph = new ListGraph<Integer, Integer>(entryList);
 		
+		Integer sourceMatrix = listGraph.getVertexByValue(109);
+		Integer destinationMatrix = listGraph.getVertexByValue(609);
+		Integer sourceList = listGraph.getVertexByValue(109);
+		Integer destinationList = listGraph.getVertexByValue(609);
+		
 		System.out.println("- Matrix Graph -");
 		WarshallFloyd<Integer, Integer> warshallFloyd = new WarshallFloyd<Integer, Integer>(matrixGraph);
 		long startTime = System.currentTimeMillis();
@@ -39,7 +44,8 @@ public class WarshallFloydTest {
 		System.out.println("Time: " + new Float(elapsedTimeM)/1000);
 //		System.out.println(matrixGraph);
 //		System.out.println(warshallFloyd);
-		printPath(matrixGraph.getVertexByValue(109), matrixGraph.getVertexByValue(609), warshallFloyd);
+		assertEquals(18.0d, warshallFloyd.getPath(sourceMatrix, destinationMatrix));
+		printPath(sourceMatrix, destinationMatrix, warshallFloyd);
 		
 		System.out.println("\n- List Graph -");
 		warshallFloyd = new WarshallFloyd<Integer, Integer>(listGraph);
@@ -50,7 +56,8 @@ public class WarshallFloydTest {
 		System.out.println("Time: " + new Float(elapsedTimeL)/1000);
 //		System.out.println(listGraph);
 //		System.out.println(warshallFloyd);
-		printPath(listGraph.getVertexByValue(109), listGraph.getVertexByValue(609), warshallFloyd);
+		assertEquals(18.0d, warshallFloyd.getPath(sourceList, destinationList));
+		printPath(sourceList, destinationList, warshallFloyd);
 		
 		System.out.println("\nR: " + new Double(elapsedTimeL)/new Double(elapsedTimeM));
 	

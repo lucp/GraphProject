@@ -30,28 +30,32 @@ public class FordBellmanTest {
 		MatrixGraph<Integer, Integer> matrixGraph = new MatrixGraph<Integer, Integer>(entryList);
 		ListGraph<Integer, Integer> listGraph = new ListGraph<Integer, Integer>(entryList);
 		
-		Integer inVertex = matrixGraph.getVertexByValue(109);
-		Integer outVertex = matrixGraph.getVertexByValue(609);
+		Integer sourceMatrix = listGraph.getVertexByValue(109);
+		Integer destinationMatrix = listGraph.getVertexByValue(609);
+		Integer sourceList = listGraph.getVertexByValue(109);
+		Integer destinationList = listGraph.getVertexByValue(609);
 		
 		System.out.println("- Matrix Graph -");
 		FordBellman<Integer, Integer> fordBellman = new FordBellman<Integer, Integer>(matrixGraph);
 		long startTime = System.currentTimeMillis();
-		fordBellman.execute(inVertex);
+		fordBellman.execute(sourceMatrix);
 		long stopTime = System.currentTimeMillis();
 		long elapsedTimeM = stopTime - startTime;
 		System.out.println("Time: " + new Float(elapsedTimeM)/1000);
 //		System.out.println(fordBellman);
-		printPath(inVertex, outVertex, fordBellman);
+		assertEquals(18.0d, fordBellman.getWeight(destinationMatrix));
+		printPath(sourceMatrix, destinationMatrix, fordBellman);
 		
 		System.out.println("\n- List Graph -");
 		fordBellman = new FordBellman<Integer, Integer>(listGraph);
 		startTime = System.currentTimeMillis();		
-		fordBellman.execute(inVertex);
+		fordBellman.execute(sourceList);
 		stopTime = System.currentTimeMillis();
 		long elapsedTimeL = stopTime - startTime;
 		System.out.println("Time: " + new Float(elapsedTimeL)/1000);
 //		System.out.println(fordBellman);
-		printPath(inVertex, outVertex, fordBellman);
+		assertEquals(18.0d, fordBellman.getWeight(destinationList));
+		printPath(sourceList, destinationList, fordBellman);
 		
 		System.out.println("\nR: " + new Double(elapsedTimeL)/new Double(elapsedTimeM));
 	
