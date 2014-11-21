@@ -30,8 +30,8 @@ public class FordBellmanTest {
 		MatrixGraph<Integer, Integer> matrixGraph = new MatrixGraph<Integer, Integer>(entryList);
 		ListGraph<Integer, Integer> listGraph = new ListGraph<Integer, Integer>(entryList);
 		
-		Integer sourceMatrix = listGraph.getVertexByValue(109);
-		Integer destinationMatrix = listGraph.getVertexByValue(609);
+		Integer sourceMatrix = matrixGraph.getVertexByValue(109);
+		Integer destinationMatrix = matrixGraph.getVertexByValue(609);
 		Integer sourceList = listGraph.getVertexByValue(109);
 		Integer destinationList = listGraph.getVertexByValue(609);
 		
