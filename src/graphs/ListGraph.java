@@ -328,21 +328,21 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 		LinkedList<VertexType> verticies = new LinkedList<VertexType>();
 		LinkedList<Entry<VertexType, EdgeType>> entriesCopy = new LinkedList<Entry<VertexType, EdgeType>>();
 		for (Entry<VertexType, EdgeType> entry : this.getAllEntries()){
-			VertexType inVertex = factory.createVertex(entry.inVertex.toString());
+			VertexType inVertex = factory.createVertex(entry.inVertex);
 			if (!verticies.contains(inVertex)) {
 				verticies.add(inVertex);
 			}
 			else{
 				inVertex = verticies.get(verticies.indexOf(inVertex));
 			}
-			VertexType outVertex = factory.createVertex(entry.outVertex.toString());
+			VertexType outVertex = factory.createVertex(entry.outVertex);
 			if (!verticies.contains(outVertex)) {
 				verticies.add(outVertex);
 			}
 			else{
 				outVertex = verticies.get(verticies.indexOf(outVertex));
 			}
-			EdgeType edge = factory.createEdge(entry.midEdge.toString());		
+			EdgeType edge = factory.createEdge(entry.midEdge);		
 			entriesCopy.add(new Entry<VertexType, EdgeType>(inVertex , outVertex, edge));
 		}
 		return new ListGraph<VertexType, EdgeType>(entriesCopy);

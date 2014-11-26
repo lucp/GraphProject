@@ -12,4 +12,16 @@ public class GraphIntegerIntegerFactory implements GraphObjectFactory<Integer, I
 		return new Integer(edge);
 	}
 
+	@Override
+	public Integer createVertex(Integer vertex) {
+		if (vertex == null) return null;
+		else return new Integer(vertex);
+	}
+
+	@Override
+	public Integer createEdge(Integer edge) {
+		if (edge == null) return null;
+		else return new Integer(edge);
+	}
+
 }

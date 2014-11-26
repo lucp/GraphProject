@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 
 import factories.GraphIntegerDoubleFactory;
+import graphs.ListGraph;
 import graphs.MatrixGraph;
 
 import org.junit.Before;
@@ -188,6 +189,12 @@ public class MatrixGraphTest {
 		assertFalse(matrixGraph.getEdges().contains(null));
 		Double edgetmp = new Double(-1);
 		assertFalse(matrixGraph.getEdges().contains(edgetmp));
+	}
+	
+	@Test
+	public void getCopyTest() {
+		MatrixGraph<Integer, Double> graphCopy = (MatrixGraph<Integer, Double>) matrixGraph.getCopy(new GraphIntegerDoubleFactory());
+		assertEquals(graphCopy.vertexNumber(), matrixGraph.vertexNumber());
 	}
 
 }

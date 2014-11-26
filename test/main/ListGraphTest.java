@@ -189,4 +189,10 @@ public class ListGraphTest {
 		assertFalse(listGraph.getEdges().contains(edgetmp));
 	}
 	
+	@Test
+	public void getCopyTest() {
+		ListGraph<Integer, Double> graphCopy = (ListGraph<Integer, Double>) listGraph.getCopy(new GraphIntegerDoubleFactory());
+		assertEquals(graphCopy.vertexNumber(), listGraph.vertexNumber());
+	}
+	
 }
