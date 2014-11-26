@@ -273,5 +273,10 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		}
 		return entries;
 	}
+	
+	@Override
+	public Graph<VertexType, EdgeType> getCopy() {
+		return new MatrixGraph<VertexType, EdgeType>(this.getAllEntries());
+	}
 
 }

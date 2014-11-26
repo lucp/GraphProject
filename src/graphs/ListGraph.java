@@ -321,4 +321,9 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 		return entries;
 	}
 
+	@Override
+	public Graph<VertexType, EdgeType> getCopy() {
+		return new ListGraph<VertexType, EdgeType>(this.getAllEntries());
+	}
+
 }

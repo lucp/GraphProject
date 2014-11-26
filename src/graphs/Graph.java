@@ -19,5 +19,6 @@ public interface Graph<VertexType, EdgeType> {
 	public int edgeNumber();
 	public boolean areNeighbours(VertexType firstVertex, VertexType secondVertex);
 	public LinkedList<Entry<VertexType, EdgeType>> getAllEntries();
+	public Graph<VertexType, EdgeType> getCopy();
 	
 }
