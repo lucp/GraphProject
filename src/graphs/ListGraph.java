@@ -4,17 +4,9 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeType> {
+import factories.GraphObjectFactory;
 
-	@SuppressWarnings("hiding")
-	private class ListElement<VertexType, EdgeType>{
-		public VertexType inVertex;
-		public EdgeType inEdge;
-		public ListElement(VertexType vertex, EdgeType edge){
-			this.inVertex = vertex;
-			this.inEdge = edge;
-		}
-	}
+public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeType> {
 	
 	int listSize;
 	
@@ -146,6 +138,16 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 		LinkedList<VertexType> neighbours = new LinkedList<VertexType>();
 		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
 			neighbours.add(this.neighbourhood[sourceIndex].get(i).inVertex);
+		}
+		return neighbours;
+	}
+	
+	@Override
+	public LinkedList<ListElement<VertexType, EdgeType>> getNeighboursAsListElements(VertexType vertex){
+		Integer sourceIndex = this.verticies.get(vertex);
+		LinkedList<ListElement<VertexType, EdgeType>> neighbours = new LinkedList<ListElement<VertexType, EdgeType>>();
+		for (int i = 0; i < this.neighbourhood[sourceIndex].size(); i++){
+			neighbours.add(new ListElement<VertexType, EdgeType>(this.neighbourhood[sourceIndex].get(i).inVertex, this.neighbourhood[sourceIndex].get(i).inEdge));
 		}
 		return neighbours;
 	}
@@ -322,8 +324,28 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 	}
 
 	@Override
-	public Graph<VertexType, EdgeType> getCopy() {
-		return new ListGraph<VertexType, EdgeType>(this.getAllEntries());
+	public Graph<VertexType, EdgeType> getCopy(GraphObjectFactory<VertexType, EdgeType> factory) {
+		LinkedList<VertexType> verticies = new LinkedList<VertexType>();
+		LinkedList<Entry<VertexType, EdgeType>> entriesCopy = new LinkedList<Entry<VertexType, EdgeType>>();
+		for (Entry<VertexType, EdgeType> entry : this.getAllEntries()){
+			VertexType inVertex = factory.createVertex(entry.inVertex.toString());
+			if (!verticies.contains(inVertex)) {
+				verticies.add(inVertex);
+			}
+			else{
+				inVertex = verticies.get(verticies.indexOf(inVertex));
+			}
+			VertexType outVertex = factory.createVertex(entry.outVertex.toString());
+			if (!verticies.contains(outVertex)) {
+				verticies.add(outVertex);
+			}
+			else{
+				outVertex = verticies.get(verticies.indexOf(outVertex));
+			}
+			EdgeType edge = factory.createEdge(entry.midEdge.toString());		
+			entriesCopy.add(new Entry<VertexType, EdgeType>(inVertex , outVertex, edge));
+		}
+		return new ListGraph<VertexType, EdgeType>(entriesCopy);
 	}
 
 }

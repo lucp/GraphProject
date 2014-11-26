@@ -1,5 +1,7 @@
 package graphs;
 
+import factories.GraphObjectFactory;
+
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -129,6 +131,15 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		LinkedList<VertexType> neighbours = new LinkedList<VertexType>();
 		for (VertexType potentialNeighbour : this.verticies.keySet()){
 			if (this.areNeighbours(vertex, potentialNeighbour)) neighbours.add(potentialNeighbour);
+		}
+		return neighbours;
+	}
+	
+	@Override
+	public LinkedList<ListElement<VertexType, EdgeType>> getNeighboursAsListElements(VertexType vertex){
+		LinkedList<ListElement<VertexType, EdgeType>> neighbours = new LinkedList<ListElement<VertexType, EdgeType>>();
+		for (VertexType potentialNeighbour : this.verticies.keySet()){
+			if (this.areNeighbours(vertex, potentialNeighbour)) neighbours.add(new ListElement<VertexType, EdgeType>(potentialNeighbour, this.getEdge(vertex, potentialNeighbour)));
 		}
 		return neighbours;
 	}
@@ -275,8 +286,28 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 	}
 	
 	@Override
-	public Graph<VertexType, EdgeType> getCopy() {
-		return new MatrixGraph<VertexType, EdgeType>(this.getAllEntries());
+	public Graph<VertexType, EdgeType> getCopy(GraphObjectFactory<VertexType, EdgeType> factory) {
+		LinkedList<VertexType> verticies = new LinkedList<VertexType>();
+		LinkedList<Entry<VertexType, EdgeType>> entriesCopy = new LinkedList<Entry<VertexType, EdgeType>>();
+		for (Entry<VertexType, EdgeType> entry : this.getAllEntries()){
+			VertexType inVertex = factory.createVertex(entry.inVertex.toString());
+			if (!verticies.contains(inVertex)) {
+				verticies.add(inVertex);
+			}
+			else{
+				inVertex = verticies.get(verticies.indexOf(inVertex));
+			}
+			VertexType outVertex = factory.createVertex(entry.outVertex.toString());
+			if (!verticies.contains(outVertex)) {
+				verticies.add(outVertex);
+			}
+			else{
+				outVertex = verticies.get(verticies.indexOf(outVertex));
+			}
+			EdgeType edge = factory.createEdge(entry.midEdge.toString());		
+			entriesCopy.add(new Entry<VertexType, EdgeType>(inVertex , outVertex, edge));
+		}
+		return new MatrixGraph<VertexType, EdgeType>(entriesCopy);
 	}
 
 }

@@ -2,9 +2,9 @@ package algorithms;
 
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 import graphs.Graph;
+import graphs.ListElement;
 
 public class BFS<VertexType, EdgeType> {
 
@@ -12,6 +12,45 @@ public class BFS<VertexType, EdgeType> {
 	
 	public BFS(Graph<VertexType, EdgeType> graph){
 		this.graph = graph;
+	}
+	
+	public LinkedList<ListElement<VertexType, EdgeType>> findPathAsListElements(VertexType source, VertexType destination){
+		LinkedList<ListElement<VertexType, EdgeType>> path = new LinkedList<ListElement<VertexType, EdgeType>>();
+		LinkedList<ListElement<VertexType, EdgeType>> queue = new LinkedList<ListElement<VertexType, EdgeType>>();
+		HashSet<VertexType> visited = new HashSet<VertexType>();
+		path.add(new ListElement<VertexType, EdgeType>(source, null));	
+		visited.add(source);
+		for (ListElement<VertexType, EdgeType> neighbour : this.graph.getNeighboursAsListElements(source)){
+			if (!visited.contains(neighbour.inVertex)){
+				queue.add(neighbour);
+				visited.add(neighbour.inVertex);
+			}
+		}
+		ListElement<VertexType, EdgeType> point = new ListElement<VertexType, EdgeType>(source, null);
+		while (point.inVertex != destination && !queue.isEmpty()){
+			point = queue.getFirst();
+			queue.removeFirst();
+			for (ListElement<VertexType, EdgeType> neighbour : this.graph.getNeighboursAsListElements(point.inVertex)){
+				if (!visited.contains(neighbour.inVertex)){
+					queue.add(neighbour);
+					visited.add(neighbour.inVertex);
+				}
+			}
+			path.add(point);
+		}
+		if (path.getLast().inVertex != destination) return null;
+		else{
+			int i = path.size() - 2;
+			while (point.inVertex != source){
+				while (!this.graph.areNeighbours(path.get(i).inVertex, point.inVertex)){ //TODO may be wrong - to rethink - wrong
+					path.remove(i);
+					i--;
+				}
+				point = path.get(i);
+				i--;
+			}
+			return path;
+		}	
 	}
 	
 	public LinkedList<VertexType> findPath(VertexType source, VertexType destination){
@@ -36,12 +75,21 @@ public class BFS<VertexType, EdgeType> {
 					visited.add(neighbour);
 				}
 			}
-			while (!this.graph.areNeighbours(path.getLast(), point)){ //TODO may be wrong - to rethink - wrong
-				path.removeLast();
-			}
 			path.add(point);
 		}
-		return path;
+		if (path.getLast() != destination) return null;
+		else{
+			int i = path.size() - 2;
+			while (point != source){
+				while (!this.graph.areNeighbours(path.get(i), point)){
+					path.remove(i);
+					i--;
+				}
+				point = path.get(i);
+				i--;
+			}
+			return path;
+		}	
 	}
 	
 }

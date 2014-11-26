@@ -2,6 +2,8 @@ package graphs;
 
 import java.util.LinkedList;
 
+import factories.GraphObjectFactory;
+
 public interface Graph<VertexType, EdgeType> {
 
 	public void addVertex(VertexType vertex);
@@ -14,11 +16,12 @@ public interface Graph<VertexType, EdgeType> {
 	public EdgeType getEdge(VertexType source, VertexType destination);
 	public LinkedList<EdgeType> getEdges();
 	public LinkedList<VertexType> getNeighbours(VertexType vertex);
+	public LinkedList<ListElement<VertexType, EdgeType>> getNeighboursAsListElements(VertexType vertex);
 	public LinkedList<EdgeType> getIncidentEdges(VertexType vertex);
 	public int vertexNumber();
 	public int edgeNumber();
 	public boolean areNeighbours(VertexType firstVertex, VertexType secondVertex);
 	public LinkedList<Entry<VertexType, EdgeType>> getAllEntries();
-	public Graph<VertexType, EdgeType> getCopy();
+	public Graph<VertexType, EdgeType> getCopy(GraphObjectFactory<VertexType, EdgeType> factory);
 	
 }
