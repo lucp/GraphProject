@@ -1,33 +1,45 @@
 package algorithms;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 import graphs.Graph;
 
 public class BFS<VertexType, EdgeType> {
 
 	private Graph<VertexType, EdgeType> graph;
-	private LinkedList<VertexType> queue;
 	
 	public BFS(Graph<VertexType, EdgeType> graph){
 		this.graph = graph;
-		this.queue = new LinkedList<VertexType>();
 	}
 	
 	public LinkedList<VertexType> findPath(VertexType source, VertexType destination){
 		LinkedList<VertexType> path = new LinkedList<VertexType>();
-		path.add(source);
-		for (VertexType neighbours : this.graph.getNeighbours(source)){
-			this.queue.add(neighbours);
+		LinkedList<VertexType> queue = new LinkedList<VertexType>();
+		HashSet<VertexType> visited = new HashSet<VertexType>();
+		path.add(source);	
+		visited.add(source);
+		for (VertexType neighbour : this.graph.getNeighbours(source)){
+			if (!visited.contains(neighbour)){
+				queue.add(neighbour);
+				visited.add(neighbour);
+			}
 		}
 		VertexType point = source;
-		while (point != destination && !this.queue.isEmpty()){
-			point = this.queue.getFirst();
-			this.queue.removeFirst();
-			for (VertexType neighbours : this.graph.getNeighbours(point)){
-				this.queue.add(neighbours);
+		while (point != destination && !queue.isEmpty()){
+			point = queue.getFirst();
+			queue.removeFirst();
+			for (VertexType neighbour : this.graph.getNeighbours(point)){
+				if (!visited.contains(neighbour)){
+					queue.add(neighbour);
+					visited.add(neighbour);
+				}
 			}
-			path.add(point); //TODO handle returns
+			while (!this.graph.areNeighbours(path.getLast(), point)){ //TODO may be wrong - to rethink - wrong
+				path.removeLast();
+			}
+			path.add(point);
 		}
 		return path;
 	}
