@@ -53,6 +53,84 @@ public class BFS<VertexType, EdgeType> {
 		}	
 	}
 	
+	public LinkedList<ListElement<VertexType, EdgeType>> findPathAsListElements(VertexType source, VertexType destination, EdgeType forbiddenValue){
+		LinkedList<ListElement<VertexType, EdgeType>> path = new LinkedList<ListElement<VertexType, EdgeType>>();
+		LinkedList<ListElement<VertexType, EdgeType>> queue = new LinkedList<ListElement<VertexType, EdgeType>>();
+		HashSet<VertexType> visited = new HashSet<VertexType>();
+		path.add(new ListElement<VertexType, EdgeType>(source, null));	
+		visited.add(source);
+		for (ListElement<VertexType, EdgeType> neighbour : this.graph.getNeighboursAsListElements(source)){
+			if (!visited.contains(neighbour.inVertex) && !neighbour.inEdge.equals(forbiddenValue)){
+				queue.add(neighbour);
+				visited.add(neighbour.inVertex);
+			}
+		}
+		ListElement<VertexType, EdgeType> point = new ListElement<VertexType, EdgeType>(source, null);
+		while (point.inVertex != destination && !queue.isEmpty()){
+			point = queue.getFirst();
+			queue.removeFirst();
+			for (ListElement<VertexType, EdgeType> neighbour : this.graph.getNeighboursAsListElements(point.inVertex)){
+				if (!visited.contains(neighbour.inVertex) && !neighbour.inEdge.equals(forbiddenValue)){
+					queue.add(neighbour);
+					visited.add(neighbour.inVertex);
+				}
+			}
+			path.add(point);
+		}
+		if (path.getLast().inVertex != destination) return null;
+		else{
+			int i = path.size() - 2;
+			while (point.inVertex != source){
+				while (!this.graph.areNeighbours(path.get(i).inVertex, point.inVertex)){ //TODO may be wrong - to rethink - wrong
+					path.remove(i);
+					i--;
+				}
+				point = path.get(i);
+				i--;
+			}
+			return path;
+		}	
+	}
+	
+	public LinkedList<ListElement<VertexType, EdgeType>> findPathAsListElements(VertexType source, VertexType destination, HashSet<EdgeType> forbiddenEdges){
+		LinkedList<ListElement<VertexType, EdgeType>> path = new LinkedList<ListElement<VertexType, EdgeType>>();
+		LinkedList<ListElement<VertexType, EdgeType>> queue = new LinkedList<ListElement<VertexType, EdgeType>>();
+		HashSet<VertexType> visited = new HashSet<VertexType>();
+		path.add(new ListElement<VertexType, EdgeType>(source, null));	
+		visited.add(source);
+		for (ListElement<VertexType, EdgeType> neighbour : this.graph.getNeighboursAsListElements(source)){
+			if (!visited.contains(neighbour.inVertex) && !forbiddenEdges.contains(neighbour.inEdge)){
+				queue.add(neighbour);
+				visited.add(neighbour.inVertex);
+			}
+		}
+		ListElement<VertexType, EdgeType> point = new ListElement<VertexType, EdgeType>(source, null);
+		while (point.inVertex != destination && !queue.isEmpty()){
+			point = queue.getFirst();
+			queue.removeFirst();
+			for (ListElement<VertexType, EdgeType> neighbour : this.graph.getNeighboursAsListElements(point.inVertex)){
+				if (!visited.contains(neighbour.inVertex) && !forbiddenEdges.contains(neighbour.inEdge)){
+					queue.add(neighbour);
+					visited.add(neighbour.inVertex);
+				}
+			}
+			path.add(point);
+		}
+		if (path.getLast().inVertex != destination) return null;
+		else{
+			int i = path.size() - 2;
+			while (point.inVertex != source){
+				while (!this.graph.areNeighbours(path.get(i).inVertex, point.inVertex)){ //TODO may be wrong - to rethink - wrong
+					path.remove(i);
+					i--;
+				}
+				point = path.get(i);
+				i--;
+			}
+			return path;
+		}	
+	}
+	
 	public LinkedList<VertexType> findPath(VertexType source, VertexType destination){
 		LinkedList<VertexType> path = new LinkedList<VertexType>();
 		LinkedList<VertexType> queue = new LinkedList<VertexType>();

@@ -3,6 +3,7 @@ package main;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 import org.junit.Before;
@@ -71,4 +72,35 @@ public class BFSTest {
 		
 	}
 
+	@Test
+	public void findPathAsListElementsForbiddenValueTest() throws IOException {
+		
+		Integer forbiddenValue = new Integer(136);
+		
+		BFS<Integer, Integer> bfs = new BFS<Integer, Integer>(matrixGraph);
+		LinkedList<ListElement<Integer, Integer>> path = bfs.findPathAsListElements(sourceMatrix, destinationMatrix, forbiddenValue);
+//		System.out.println(path);
+		
+		bfs = new BFS<Integer, Integer>(listGraph);
+		path = bfs.findPathAsListElements(sourceList, destinationList, forbiddenValue);
+//		System.out.println(path);
+		
+	}
+	
+	@Test
+	public void findPathAsListElementsForbiddenEdgesTest() throws IOException {
+		
+		HashSet<Integer> forbiddenEdges = new HashSet<Integer>();
+		forbiddenEdges.add(this.matrixGraph.getIncidentEdges(this.matrixGraph.getVertexByValue(new Integer(109))).get(2));
+		
+		BFS<Integer, Integer> bfs = new BFS<Integer, Integer>(matrixGraph);
+		LinkedList<ListElement<Integer, Integer>> path = bfs.findPathAsListElements(sourceMatrix, destinationMatrix, forbiddenEdges);
+		System.out.println(path);
+		
+		bfs = new BFS<Integer, Integer>(listGraph);
+		path = bfs.findPathAsListElements(sourceList, destinationList, forbiddenEdges);
+		System.out.println(path);
+		
+	}
+	
 }
