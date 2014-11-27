@@ -195,6 +195,11 @@ public class MatrixGraphTest {
 	public void getCopyTest() {
 		MatrixGraph<Integer, Double> graphCopy = (MatrixGraph<Integer, Double>) matrixGraph.getCopy(new GraphIntegerDoubleFactory());
 		assertEquals(graphCopy.vertexNumber(), matrixGraph.vertexNumber());
+		Integer original = matrixGraph.getVertexByValue(3);
+		Integer copied = graphCopy.getVertexByValue(3);
+		assertEquals(graphCopy.vertexNumber(), matrixGraph.vertexNumber());
+		assertEquals(original, copied);
+		assertFalse(original == copied);
 	}
 
 }

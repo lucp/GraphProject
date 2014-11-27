@@ -192,7 +192,11 @@ public class ListGraphTest {
 	@Test
 	public void getCopyTest() {
 		ListGraph<Integer, Double> graphCopy = (ListGraph<Integer, Double>) listGraph.getCopy(new GraphIntegerDoubleFactory());
+		Integer original = listGraph.getVertexByValue(3);
+		Integer copied = graphCopy.getVertexByValue(3);
 		assertEquals(graphCopy.vertexNumber(), listGraph.vertexNumber());
+		assertEquals(original, copied);
+		assertFalse(original == copied);
 	}
 	
 }
