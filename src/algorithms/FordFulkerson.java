@@ -25,13 +25,16 @@ public class FordFulkerson<VertexType, EdgeType extends Number & Comparable<Edge
 	}
 	
 	public EdgeType execute(VertexType source, VertexType destination){
-		
 		for (EdgeType edge : this.graph.getEdges()){
 			this.flow.put(edge, 0d);
 			this.capacity.put(edge, edge);
 		}
+		HashSet<VertexType> inVerticies = new HashSet<VertexType>();
 		LinkedList<ListElement<VertexType, EdgeType>> path = bfs.findPathAsListElements(source, destination, this.forbiddenEdges);
 		while (path != null){
+			if (!inVerticies.contains(path.get(path.size() - 2))){
+				//TODO
+			}
 			EdgeType minEdge = path.getFirst().inEdge;
 			for (ListElement<VertexType, EdgeType> listElement : path){
 				if (minEdge.compareTo(listElement.inEdge) < 0){
@@ -43,6 +46,10 @@ public class FordFulkerson<VertexType, EdgeType extends Number & Comparable<Edge
 				this.capacity.replace(listElement.inEdge, this.flow.get(listElement.inEdge).doubleValue() - minEdge.doubleValue());
 				if (this.capacity.get(listElement.inEdge).doubleValue() == 0d) this.forbiddenEdges.add(listElement.inEdge);
 			}
+		}
+		Number finalFlow = 0;
+		for (VertexType inVertex : inVerticies){
+			
 		}
 		return null;
 	}
