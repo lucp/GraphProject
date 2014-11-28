@@ -3,6 +3,8 @@ package main;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 import org.junit.Before;
@@ -38,23 +40,31 @@ public class FordFulkersonTest {
 		matrixGraph = new MatrixGraph<Integer, Integer>(entryList);
 		listGraph = new ListGraph<Integer, Integer>(entryList);
 		
-		sourceMatrix = matrixGraph.getVertexByValue(1);
-		destinationMatrix = matrixGraph.getVertexByValue(6);
-		sourceList = listGraph.getVertexByValue(1);
-		destinationList = listGraph.getVertexByValue(6);
+		sourceMatrix = matrixGraph.getVertexByValue(109);
+		destinationMatrix = matrixGraph.getVertexByValue(609);
+		sourceList = listGraph.getVertexByValue(109);
+		destinationList = listGraph.getVertexByValue(609);
 		
 	}
 	
 	@Test
 	public void test() {
-		 BFS<Integer, Integer> bfs = new BFS<Integer, Integer>(matrixGraph);
-		 FordFulkerson<Integer, Integer> fordFulkerson = new FordFulkerson<Integer, Integer>(matrixGraph);
-		 Double flow = (Double) fordFulkerson.execute(sourceMatrix, destinationMatrix);
-		 System.out.println(flow);
+		System.out.println("Ford-Fulkerson\n");
+		
+		FordFulkerson<Integer, Integer> fordFulkerson = new FordFulkerson<Integer, Integer>(matrixGraph);
+		long startTime = System.currentTimeMillis();
+		Double flow = (Double) fordFulkerson.execute(sourceMatrix, destinationMatrix);
+		long stopTime = System.currentTimeMillis();
+		long elapsedTimeM = stopTime - startTime;
+		System.out.println("Time: " + new Float(elapsedTimeM)/1000);
+		System.out.println(flow);
 		 
-		 bfs = new BFS<Integer, Integer>(listGraph);
-		 fordFulkerson = new FordFulkerson<Integer, Integer>(listGraph);
-		 flow = (Double) fordFulkerson.execute(sourceList, destinationList);
-		 System.out.println(flow);
+		fordFulkerson = new FordFulkerson<Integer, Integer>(listGraph);
+		startTime = System.currentTimeMillis();
+		flow = (Double) fordFulkerson.execute(sourceList, destinationList);
+		stopTime = System.currentTimeMillis();
+		elapsedTimeM = stopTime - startTime;
+		System.out.println("Time: " + new Float(elapsedTimeM)/1000);
+		System.out.println(flow);
 	}
 }

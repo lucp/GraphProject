@@ -1,6 +1,7 @@
 package algorithms;
 
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.LinkedList;
 
 import graphs.Graph;
@@ -118,6 +119,98 @@ public class BFS<VertexType, EdgeType> {
 			queue.removeFirst();
 			for (ListElement<VertexType, EdgeType> neighbour : this.graph.getNeighboursAsListElements(point.inVertex)){
 				if (!visited.contains(neighbour.inVertex) && !forbiddenEdges.contains(neighbour.inEdge)){
+					queue.add(neighbour);
+					visited.add(neighbour.inVertex);
+				}
+			}
+			path.add(point);
+		}
+		if (path.getLast().inVertex != destination) return null;
+		else{
+			int i = path.size() - 2;
+			while (point.inVertex != source){
+				while (!this.graph.areNeighbours(path.get(i).inVertex, point.inVertex)){
+					path.remove(i);
+					i--;
+				}
+				point = path.get(i);
+				i--;
+			}
+			return path;
+		}	
+	}
+	
+	public LinkedList<ListElement<VertexType, EdgeType>> findPathAsListElements(VertexType source, VertexType destination, LinkedList<EdgeType> forbiddenEdges){
+		LinkedList<ListElement<VertexType, EdgeType>> path = new LinkedList<ListElement<VertexType, EdgeType>>();
+		LinkedList<ListElement<VertexType, EdgeType>> queue = new LinkedList<ListElement<VertexType, EdgeType>>();
+		HashSet<VertexType> visited = new HashSet<VertexType>();
+		path.add(new ListElement<VertexType, EdgeType>(source, null));	
+		visited.add(source);
+		for (ListElement<VertexType, EdgeType> neighbour : this.graph.getNeighboursAsListElements(source)){
+			boolean forbidden = false;
+			for (EdgeType edge : forbiddenEdges){
+				if (neighbour.inEdge == edge){
+					forbidden = true;
+					break;
+				}
+			}
+			if (!visited.contains(neighbour.inVertex) && !forbidden){
+				queue.add(neighbour);
+				visited.add(neighbour.inVertex);
+			}
+		}
+		ListElement<VertexType, EdgeType> point = new ListElement<VertexType, EdgeType>(source, null);
+		while (point.inVertex != destination && !queue.isEmpty()){
+			point = queue.getFirst();
+			queue.removeFirst();
+			for (ListElement<VertexType, EdgeType> neighbour : this.graph.getNeighboursAsListElements(point.inVertex)){
+				boolean forbidden = false;
+				for (EdgeType edge : forbiddenEdges){
+					if (neighbour.inEdge == edge){
+						forbidden = true;
+						break;
+					}
+				}
+				if (!visited.contains(neighbour.inVertex) && !forbidden){
+					queue.add(neighbour);
+					visited.add(neighbour.inVertex);
+				}
+			}
+			path.add(point);
+		}
+		if (path.getLast().inVertex != destination) return null;
+		else{
+			int i = path.size() - 2;
+			while (point.inVertex != source){
+				while (!this.graph.areNeighbours(path.get(i).inVertex, point.inVertex)){
+					path.remove(i);
+					i--;
+				}
+				point = path.get(i);
+				i--;
+			}
+			return path;
+		}	
+	}
+	
+	public LinkedList<ListElement<VertexType, EdgeType>> findPathAsListElements(VertexType source, VertexType destination, IdentityHashMap<EdgeType, Boolean> forbiddenEdges){
+		LinkedList<ListElement<VertexType, EdgeType>> path = new LinkedList<ListElement<VertexType, EdgeType>>();
+		LinkedList<ListElement<VertexType, EdgeType>> queue = new LinkedList<ListElement<VertexType, EdgeType>>();
+		HashSet<VertexType> visited = new HashSet<VertexType>();
+		path.add(new ListElement<VertexType, EdgeType>(source, null));	
+		visited.add(source);
+		for (ListElement<VertexType, EdgeType> neighbour : this.graph.getNeighboursAsListElements(source)){
+			if (!visited.contains(neighbour.inVertex) && !forbiddenEdges.get(neighbour.inEdge)){
+				queue.add(neighbour);
+				visited.add(neighbour.inVertex);
+			}
+		}
+		ListElement<VertexType, EdgeType> point = new ListElement<VertexType, EdgeType>(source, null);
+		while (point.inVertex != destination && !queue.isEmpty()){
+			point = queue.getFirst();
+			queue.removeFirst();
+			for (ListElement<VertexType, EdgeType> neighbour : this.graph.getNeighboursAsListElements(point.inVertex)){
+				if (!visited.contains(neighbour.inVertex) && !forbiddenEdges.get(neighbour.inEdge)){
 					queue.add(neighbour);
 					visited.add(neighbour.inVertex);
 				}

@@ -2,6 +2,7 @@ package algorithms;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.IdentityHashMap;
 import java.util.LinkedList;
 
 import graphs.Graph;
@@ -19,21 +20,23 @@ public class FordFulkerson<VertexType, EdgeType extends Number & Comparable<Edge
 	}
 	
 	public Number execute(VertexType source, VertexType destination){
-		HashMap<EdgeType, Number> flow = new HashMap<EdgeType, Number>();
-		HashMap<EdgeType, Number> capacity = new HashMap<EdgeType, Number>();
-		HashSet<EdgeType> forbiddenEdges = new HashSet<EdgeType>();
-		HashSet<EdgeType> inEdges = new HashSet<EdgeType>();
+		IdentityHashMap<EdgeType, Number> flow = new IdentityHashMap<EdgeType, Number>();
+		IdentityHashMap<EdgeType, Number> capacity = new IdentityHashMap<EdgeType, Number>();
+		IdentityHashMap<EdgeType, Boolean> forbiddenEdges = new IdentityHashMap<EdgeType, Boolean>();
+		LinkedList<EdgeType> inEdges = new LinkedList<EdgeType>();
 		for (EdgeType edge : this.graph.getEdges()){
 			flow.put(edge, 0d);
-			capacity.put(edge, edge);
-			if (edge.doubleValue() <= 0) forbiddenEdges.add(edge);
+			capacity.put(edge, edge.doubleValue());
+			if (edge.doubleValue() <= 0) forbiddenEdges.put(edge, true);
+			else forbiddenEdges.put(edge, false);
 		}
 		LinkedList<ListElement<VertexType, EdgeType>> path = bfs.findPathAsListElements(source, destination, forbiddenEdges);
-		System.out.println(path);
+//		System.out.println(path);
+		int i=0;
 		while (path != null){
 			inEdges.add(path.getLast().inEdge);
 			Number minEdge = capacity.get(path.getLast().inEdge);
-			for (ListElement<VertexType, EdgeType> listElement : path){ //TODO check if null
+			for (ListElement<VertexType, EdgeType> listElement : path){
 				if (listElement.inEdge != null){
 					if (minEdge.doubleValue() > capacity.get(listElement.inEdge).doubleValue()){
 						minEdge = capacity.get(listElement.inEdge).doubleValue();
@@ -42,16 +45,15 @@ public class FordFulkerson<VertexType, EdgeType extends Number & Comparable<Edge
 			}
 			for (ListElement<VertexType, EdgeType> listElement : path){
 				if (listElement.inEdge != null){
-					System.out.print("[ F: " + minEdge + ";" + flow.get(listElement.inEdge) + ";" + capacity.get(listElement.inEdge) + ";" + forbiddenEdges.size());
+//					System.out.print("[ F: " + minEdge + ";" + flow.get(listElement.inEdge) + ";" + capacity.get(listElement.inEdge) + ";" + forbiddenEdges.size());
 					flow.put(listElement.inEdge, flow.get(listElement.inEdge).doubleValue() + minEdge.doubleValue());
 					capacity.put(listElement.inEdge, capacity.get(listElement.inEdge).doubleValue() - minEdge.doubleValue());
-					if (capacity.get(listElement.inEdge).doubleValue() == 0d) forbiddenEdges.add(listElement.inEdge);
-					System.out.print(" T: " + minEdge + ";" + flow.get(listElement.inEdge) + ";" + capacity.get(listElement.inEdge) + ";" + forbiddenEdges.size() + "]");
+					if (capacity.get(listElement.inEdge).doubleValue() == 0d) forbiddenEdges.put(listElement.inEdge, true);
+//					System.out.print(" T: " + minEdge + ";" + flow.get(listElement.inEdge) + ";" + capacity.get(listElement.inEdge) + ";" + forbiddenEdges.size() + "]");
 				}
 			}
-			System.out.println();
 			path = bfs.findPathAsListElements(source, destination, forbiddenEdges);
-			System.out.println(path);
+//			System.out.println(i++);
 		}
 		Number finalFlow = 0;
 		for (EdgeType inEdge : inEdges){
