@@ -128,7 +128,7 @@ public class BFS<VertexType, EdgeType> {
 		else{
 			int i = path.size() - 2;
 			while (point.inVertex != source){
-				while (!this.graph.areNeighbours(path.get(i).inVertex, point.inVertex)){ //TODO may be wrong - to rethink - wrong
+				while (!this.graph.areNeighbours(path.get(i).inVertex, point.inVertex)){
 					path.remove(i);
 					i--;
 				}

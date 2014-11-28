@@ -38,10 +38,10 @@ public class FordFulkersonTest {
 		matrixGraph = new MatrixGraph<Integer, Integer>(entryList);
 		listGraph = new ListGraph<Integer, Integer>(entryList);
 		
-		sourceMatrix = matrixGraph.getVertexByValue(109);
-		destinationMatrix = matrixGraph.getVertexByValue(609);
-		sourceList = listGraph.getVertexByValue(109);
-		destinationList = listGraph.getVertexByValue(609);
+		sourceMatrix = matrixGraph.getVertexByValue(1);
+		destinationMatrix = matrixGraph.getVertexByValue(6);
+		sourceList = listGraph.getVertexByValue(1);
+		destinationList = listGraph.getVertexByValue(6);
 		
 	}
 	
@@ -49,12 +49,12 @@ public class FordFulkersonTest {
 	public void test() {
 		 BFS<Integer, Integer> bfs = new BFS<Integer, Integer>(matrixGraph);
 		 FordFulkerson<Integer, Integer> fordFulkerson = new FordFulkerson<Integer, Integer>(matrixGraph);
-		 Integer flow = (Integer) fordFulkerson.execute(sourceMatrix, destinationMatrix);
+		 Double flow = (Double) fordFulkerson.execute(sourceMatrix, destinationMatrix);
 		 System.out.println(flow);
 		 
 		 bfs = new BFS<Integer, Integer>(listGraph);
 		 fordFulkerson = new FordFulkerson<Integer, Integer>(listGraph);
-		 flow = (Integer) fordFulkerson.execute(sourceList, destinationList);
+		 flow = (Double) fordFulkerson.execute(sourceList, destinationList);
 		 System.out.println(flow);
 	}
 }
