@@ -10,6 +10,14 @@ public class BFS<VertexType, EdgeType> {
 
 	private Graph<VertexType, EdgeType> graph;
 	
+	public Graph<VertexType, EdgeType> getGraph() {
+		return graph;
+	}
+
+	public void setGraph(Graph<VertexType, EdgeType> graph) {
+		this.graph = graph;
+	}
+
 	public BFS(Graph<VertexType, EdgeType> graph){
 		this.graph = graph;
 	}

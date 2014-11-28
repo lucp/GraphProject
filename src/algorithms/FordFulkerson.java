@@ -39,9 +39,11 @@ public class FordFulkerson<VertexType, EdgeType extends Number & Comparable<Edge
 				}
 			}
 			for (ListElement<VertexType, EdgeType> listElement : path){
-				flow.put(listElement.inEdge, flow.get(listElement.inEdge).doubleValue() + minEdge.doubleValue());
-				capacity.put(listElement.inEdge, flow.get(listElement.inEdge).doubleValue() - minEdge.doubleValue());
-				if (capacity.get(listElement.inEdge).doubleValue() == 0d) forbiddenEdges.add(listElement.inEdge);
+				if (listElement.inEdge != null){
+					flow.put(listElement.inEdge, flow.get(listElement.inEdge).doubleValue() + minEdge.doubleValue());
+					capacity.put(listElement.inEdge, flow.get(listElement.inEdge).doubleValue() - minEdge.doubleValue());
+					if (capacity.get(listElement.inEdge).doubleValue() == 0d) forbiddenEdges.add(listElement.inEdge);
+				}
 			}
 		}
 		Number finalFlow = 0;
