@@ -34,7 +34,14 @@ public class FordFulkerson<VertexType, EdgeType extends Number & Comparable<Edge
 //		System.out.println(path);
 		int i=0;
 		while (path != null){
-			inEdges.add(path.getLast().inEdge);
+			boolean exists = false;
+			for (EdgeType edge : inEdges){
+				if (path.getLast().inEdge == edge){
+					exists = true;
+					break;
+				}
+			}
+			if (!exists) inEdges.add(path.getLast().inEdge);
 			Number minEdge = capacity.get(path.getLast().inEdge);
 			for (ListElement<VertexType, EdgeType> listElement : path){
 				if (listElement.inEdge != null){
@@ -45,11 +52,11 @@ public class FordFulkerson<VertexType, EdgeType extends Number & Comparable<Edge
 			}
 			for (ListElement<VertexType, EdgeType> listElement : path){
 				if (listElement.inEdge != null){
-//					System.out.print("[ F: " + minEdge + ";" + flow.get(listElement.inEdge) + ";" + capacity.get(listElement.inEdge) + ";" + forbiddenEdges.size());
+//					System.out.print("[ F: " + minEdge + ";" + flow.get(listElement.inEdge) + "/" + capacity.get(listElement.inEdge));
 					flow.put(listElement.inEdge, flow.get(listElement.inEdge).doubleValue() + minEdge.doubleValue());
 					capacity.put(listElement.inEdge, capacity.get(listElement.inEdge).doubleValue() - minEdge.doubleValue());
 					if (capacity.get(listElement.inEdge).doubleValue() == 0d) forbiddenEdges.put(listElement.inEdge, true);
-//					System.out.print(" T: " + minEdge + ";" + flow.get(listElement.inEdge) + ";" + capacity.get(listElement.inEdge) + ";" + forbiddenEdges.size() + "]");
+//					System.out.print(" T: " + minEdge + ";" + flow.get(listElement.inEdge) + "/" + capacity.get(listElement.inEdge) + "]");
 				}
 			}
 			path = bfs.findPathAsListElements(source, destination, forbiddenEdges);
