@@ -101,14 +101,14 @@ public class BFS<VertexType, EdgeType> {
 		}	
 	}
 	
-	public LinkedList<ListElement<VertexType, EdgeType>> findPathAsListElements(VertexType source, VertexType destination, HashSet<EdgeType> forbiddenEdges){
+	public LinkedList<ListElement<VertexType, EdgeType>> findPathAsListElements(VertexType source, VertexType destination, HashSet<EdgeType> forbiddenEdgeValues){
 		LinkedList<ListElement<VertexType, EdgeType>> path = new LinkedList<ListElement<VertexType, EdgeType>>();
 		LinkedList<ListElement<VertexType, EdgeType>> queue = new LinkedList<ListElement<VertexType, EdgeType>>();
 		HashSet<VertexType> visited = new HashSet<VertexType>();
 		path.add(new ListElement<VertexType, EdgeType>(source, null));	
 		visited.add(source);
 		for (ListElement<VertexType, EdgeType> neighbour : this.graph.getNeighboursAsListElements(source)){
-			if (!visited.contains(neighbour.inVertex) && !forbiddenEdges.contains(neighbour.inEdge)){
+			if (!visited.contains(neighbour.inVertex) && !forbiddenEdgeValues.contains(neighbour.inEdge)){
 				queue.add(neighbour);
 				visited.add(neighbour.inVertex);
 			}
@@ -118,7 +118,7 @@ public class BFS<VertexType, EdgeType> {
 			point = queue.getFirst();
 			queue.removeFirst();
 			for (ListElement<VertexType, EdgeType> neighbour : this.graph.getNeighboursAsListElements(point.inVertex)){
-				if (!visited.contains(neighbour.inVertex) && !forbiddenEdges.contains(neighbour.inEdge)){
+				if (!visited.contains(neighbour.inVertex) && !forbiddenEdgeValues.contains(neighbour.inEdge)){
 					queue.add(neighbour);
 					visited.add(neighbour.inVertex);
 				}
