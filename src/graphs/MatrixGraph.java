@@ -270,7 +270,7 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 	}
 
 	@Override
-	public LinkedList<Entry<VertexType, EdgeType>> getAllEntries() {//TODO
+	public LinkedList<Entry<VertexType, EdgeType>> getAllEntries() {
 		LinkedList<Entry<VertexType, EdgeType>> entries =  new LinkedList<Entry<VertexType,EdgeType>>();
 		Set<Map.Entry<VertexType, Integer>> entrySet = this.verticies.entrySet();
 		for (Map.Entry<VertexType, Integer> inVertexEntry : entrySet){
@@ -308,6 +308,41 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 			entriesCopy.add(new Entry<VertexType, EdgeType>(inVertex , outVertex, edge));
 		}
 		return new MatrixGraph<VertexType, EdgeType>(entriesCopy);
+	}
+
+	@Override
+	public VertexType getRoot() {
+		for (VertexType rootPretendent : this.verticies.keySet()) {
+			Integer vertexIndex = this.verticies.get(rootPretendent);
+			boolean hasInEdge = false;
+			for (int i = 0 ; i < this.matrixSize; i++) {
+				if (this.edges[i][vertexIndex] != null) {
+					hasInEdge = true;
+					break;
+				}
+			}
+			if (hasInEdge == false) {
+				return rootPretendent;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public boolean isTree() {
+		for (VertexType vertex : this.verticies.keySet()) {
+			Integer vertexIndex = this.verticies.get(vertex);
+			boolean hasInEdge = false;
+			for (int i = 0 ; i < this.matrixSize; i++) {
+				if (this.edges[i][vertexIndex] != null) {
+					if (hasInEdge) {
+						return false;
+					}
+					hasInEdge = true;
+				}
+			}
+		}
+		return true;
 	}
 
 }

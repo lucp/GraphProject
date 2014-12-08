@@ -201,5 +201,35 @@ public class MatrixGraphTest {
 		assertEquals(original, copied);
 		assertFalse(original == copied);
 	}
+	
+	@Test
+	public void getRootTest() {
+		assertEquals(this.matrixGraph.getRoot(), this.vertex1);
+		assertNotEquals(this.matrixGraph.getRoot(), this.vertex2);
+		assertNotEquals(this.matrixGraph.getRoot(), this.vertex3);
+		Integer tmpVertex = new Integer(0);
+		Double tmpEdge = new Double(0);
+		this.matrixGraph.addVertex(tmpVertex);
+		this.matrixGraph.addEdge(vertex1, tmpVertex, tmpEdge);
+		assertEquals(this.matrixGraph.getRoot(), this.vertex1);
+		this.matrixGraph.addEdge(vertex3, vertex2, tmpEdge);
+		assertEquals(this.matrixGraph.getRoot(), this.vertex1);
+		this.matrixGraph.addEdge(tmpVertex, vertex1, tmpEdge);
+		assertNotEquals(this.matrixGraph.getRoot(), this.vertex1);
+	}
+	
+	@Test
+	public void isTreeTest() {
+		assertTrue(this.matrixGraph.isTree());
+		Integer tmpVertex = new Integer(0);
+		Double tmpEdge = new Double(0);
+		this.matrixGraph.addVertex(tmpVertex);
+		this.matrixGraph.addEdge(vertex1, tmpVertex, tmpEdge);
+		assertTrue(this.matrixGraph.isTree());
+		this.matrixGraph.addEdge(vertex3, vertex2, tmpEdge);
+		assertFalse(this.matrixGraph.isTree());
+		this.matrixGraph.addEdge(tmpVertex, vertex1, tmpEdge);
+		assertFalse(this.matrixGraph.isTree());
+	}
 
 }

@@ -23,5 +23,7 @@ public interface Graph<VertexType, EdgeType> {
 	public boolean areNeighbours(VertexType firstVertex, VertexType secondVertex);
 	public LinkedList<Entry<VertexType, EdgeType>> getAllEntries();
 	public Graph<VertexType, EdgeType> getCopy(GraphObjectFactory<VertexType, EdgeType> factory);
+	public VertexType getRoot();
+	public boolean isTree();
 	
 }

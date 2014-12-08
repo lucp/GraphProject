@@ -75,12 +75,10 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 	}
 	
 	public Integer findFreeListEntry(){
-		Integer freeIndex = 0;
-		while (freeIndex < this.listSize && this.verticies.containsValue(freeIndex)){
-			freeIndex++;
+		for (int i = 0; i < this.neighbourhood.length; i++) {
+			if (this.neighbourhood[i] == null) return i;
 		}
-		if (freeIndex >= this.listSize) return null;
-		else return freeIndex;
+		return null;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -346,6 +344,43 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 			entriesCopy.add(new Entry<VertexType, EdgeType>(inVertex , outVertex, edge));
 		}
 		return new ListGraph<VertexType, EdgeType>(entriesCopy);
+	}
+
+	@Override
+	public VertexType getRoot() {
+		for (VertexType rootPretendent : this.verticies.keySet()) {
+			boolean hasInEdge = false;
+			for (VertexType vertex : this.verticies.keySet()) {
+				int vertexIndex = this.verticies.get(vertex);
+				for (ListElement<VertexType, EdgeType> listElement : this.neighbourhood[vertexIndex]) {
+					if (listElement.inVertex == rootPretendent) {
+						hasInEdge = true;
+						break;
+					}
+				}
+			}
+			if (hasInEdge == false) {
+				return rootPretendent;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public boolean isTree() {
+		for (VertexType vertex : this.verticies.keySet()) {
+			boolean hasInEdge = false;
+			for (VertexType iVertex : this.verticies.keySet()) {
+				int vertexIndex = this.verticies.get(iVertex);
+				for (ListElement<VertexType, EdgeType> listElement : this.neighbourhood[vertexIndex]) {
+					if (listElement.inVertex == vertex) {
+						if (hasInEdge) return false;
+						hasInEdge = true;
+					}
+				}
+			}
+		}
+		return true;
 	}
 
 }

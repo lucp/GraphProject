@@ -199,4 +199,34 @@ public class ListGraphTest {
 		assertFalse(original == copied);
 	}
 	
+	@Test
+	public void getRootTest() {
+		assertEquals(this.listGraph.getRoot(), this.vertex1);
+		assertNotEquals(this.listGraph.getRoot(), this.vertex2);
+		assertNotEquals(this.listGraph.getRoot(), this.vertex3);
+		Integer tmpVertex = new Integer(0);
+		Double tmpEdge = new Double(0);
+		this.listGraph.addVertex(tmpVertex);
+		this.listGraph.addEdge(vertex1, tmpVertex, tmpEdge);
+		assertEquals(this.listGraph.getRoot(), this.vertex1);
+		this.listGraph.addEdge(vertex3, vertex2, tmpEdge);
+		assertEquals(this.listGraph.getRoot(), this.vertex1);
+		this.listGraph.addEdge(tmpVertex, vertex1, tmpEdge);
+		assertNotEquals(this.listGraph.getRoot(), this.vertex1);
+	}
+	
+	@Test
+	public void isTreeTest() {
+		assertTrue(this.listGraph.isTree());
+		Integer tmpVertex = new Integer(0);
+		Double tmpEdge = new Double(0);
+		this.listGraph.addVertex(tmpVertex);
+		this.listGraph.addEdge(vertex1, tmpVertex, tmpEdge);
+		assertTrue(this.listGraph.isTree());
+		this.listGraph.addEdge(vertex3, vertex2, tmpEdge);
+		assertFalse(this.listGraph.isTree());
+		this.listGraph.addEdge(tmpVertex, vertex1, tmpEdge);
+		assertFalse(this.listGraph.isTree());
+	}
+	
 }
