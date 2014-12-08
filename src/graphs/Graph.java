@@ -2,7 +2,7 @@ package graphs;
 
 import java.util.LinkedList;
 
-import factories.GraphObjectFactory;
+import model.GraphObjectFactory;
 
 public interface Graph<VertexType, EdgeType> {
 

@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import factories.GraphObjectFactory;
+import model.GraphObjectFactory;
 import graphs.Entry;
 
 public class GraphFileReader<VertexType, EdgeType> {

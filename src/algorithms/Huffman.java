@@ -1,11 +1,12 @@
 package algorithms;
 
-import factories.GraphObjectFactory;
 import graphs.Graph;
 
 import java.util.LinkedList;
 
-public class Huffman<VertexType, EdgeType> {
+import model.GraphObjectFactory;
+
+public class Huffman<VertexType, EdgeType> { //TODO huffman element
 
 	private LinkedList<Graph<VertexType, EdgeType>> trees;
 	
@@ -20,7 +21,10 @@ public class Huffman<VertexType, EdgeType> {
 	
 	public Graph<VertexType, EdgeType> generateTree() {
 		while (this.trees.size() != 1) {
-			//for ()
+			Graph<VertexType, EdgeType> minRootValue = this.trees.getFirst();
+			for (Graph<VertexType, EdgeType> tree : this.trees) {
+//				if (tree.getRoot())
+			}
 		}
 		return null; //TODO
 	}

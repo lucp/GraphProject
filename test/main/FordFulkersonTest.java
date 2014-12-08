@@ -7,13 +7,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+import model.GraphIntegerIntegerFactory;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import algorithms.BFS;
 import algorithms.FordFulkerson;
 import reader.GraphFileReader;
-import factories.GraphIntegerIntegerFactory;
 import graphs.Entry;
 import graphs.ListGraph;
 import graphs.MatrixGraph;

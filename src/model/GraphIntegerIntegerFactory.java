@@ -1,6 +1,6 @@
-package factories;
+package model;
 
-public class GraphIntegerDoubleFactory implements GraphObjectFactory<Integer, Double> {
+public class GraphIntegerIntegerFactory implements GraphObjectFactory<Integer, Integer> {
 
 	@Override
 	public Integer createVertex(String vertex) {
@@ -8,10 +8,10 @@ public class GraphIntegerDoubleFactory implements GraphObjectFactory<Integer, Do
 	}
 
 	@Override
-	public Double createEdge(String edge) {
-		return new Double(edge);
+	public Integer createEdge(String edge) {
+		return new Integer(edge);
 	}
-	
+
 	@Override
 	public Integer createVertex(Integer vertex) {
 		if (vertex == null) return null;
@@ -19,9 +19,9 @@ public class GraphIntegerDoubleFactory implements GraphObjectFactory<Integer, Do
 	}
 
 	@Override
-	public Double createEdge(Double edge) {
+	public Integer createEdge(Integer edge) {
 		if (edge == null) return null;
-		else return new Double(edge);
+		else return new Integer(edge);
 	}
 
 }

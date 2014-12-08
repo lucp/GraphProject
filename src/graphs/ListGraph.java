@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
-import factories.GraphObjectFactory;
+import model.GraphObjectFactory;
 
 public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeType> {
 	

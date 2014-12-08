@@ -5,9 +5,10 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.util.LinkedList;
 
+import model.GraphIntegerDoubleFactory;
+
 import org.junit.Test;
 
-import factories.GraphIntegerDoubleFactory;
 import graphs.Entry;
 import reader.GraphFileReader;
 

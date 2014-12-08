@@ -5,10 +5,10 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.util.LinkedList;
 
-import factories.GraphIntegerIntegerFactory;
 import graphs.Entry;
 import graphs.ListGraph;
 import graphs.MatrixGraph;
+import model.GraphIntegerIntegerFactory;
 
 import org.junit.Test;
 

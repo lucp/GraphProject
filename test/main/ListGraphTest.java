@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
-import factories.GraphIntegerDoubleFactory;
 import graphs.ListGraph;
+import model.GraphIntegerDoubleFactory;
 
 import org.junit.Before;
 import org.junit.Test;

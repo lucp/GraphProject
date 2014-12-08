@@ -1,4 +1,4 @@
-package factories;
+package model;
 
 public interface GraphObjectFactory<VertexType, EdgeType> {
 

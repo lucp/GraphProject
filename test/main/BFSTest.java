@@ -6,12 +6,13 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.LinkedList;
 
+import model.GraphIntegerIntegerFactory;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import algorithms.BFS;
 import reader.GraphFileReader;
-import factories.GraphIntegerIntegerFactory;
 import graphs.Entry;
 import graphs.ListElement;
 import graphs.ListGraph;

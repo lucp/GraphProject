@@ -1,11 +1,11 @@
 package graphs;
 
-import factories.GraphObjectFactory;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
+
+import model.GraphObjectFactory;
 
 public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeType> {
 
