@@ -18,7 +18,8 @@ public class HuffmanTest {
 		Huffman huffman = new Huffman("TO BE OR NOT TO BE", MatrixGraph.class);
 		Graph<HVertex, HEdge> graph = huffman.generateTree();
 		assertEquals(graph.vertexNumber(), 13);
-		assertEquals(graph.edgeNumber(), 12);	
+		assertEquals(graph.edgeNumber(), 12);
+		assertEquals(graph.getRoot().probability, 18);
 	}
 
 }

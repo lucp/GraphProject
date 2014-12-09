@@ -33,6 +33,7 @@ public class Huffman {
 				}
 				root.addVertex(vertex);
 				this.trees.add(root);
+				characters.put(character, vertex);
 			}
 		}
 	}
