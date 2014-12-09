@@ -52,6 +52,11 @@ public class Huffman {
 					}
 				}
 			}
+			HVertex hvertex = new HVertex(minRootProbability1 + minRootProbability2, null);
+			HEdge hedge0 = new HEdge((byte)0);
+			HEdge hedge1 = new HEdge((byte)1);
+			minRoot1.addVertex(hvertex);
+//			minRoot1.addEdge(source, destination, edge);
 		}
 		return null; //TODO
 	}

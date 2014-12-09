@@ -25,5 +25,7 @@ public interface Graph<VertexType, EdgeType> {
 	public Graph<VertexType, EdgeType> getCopy(GraphObjectFactory<VertexType, EdgeType> factory);
 	public VertexType getRoot();
 	public boolean isTree();
+	public void addBuffer(int buffer);
+	public void mergeWith(Graph<VertexType, EdgeType> graph);
 	
 }

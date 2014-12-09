@@ -229,4 +229,30 @@ public class ListGraphTest {
 		assertFalse(this.listGraph.isTree());
 	}
 	
+	@Test
+	public void addBufferTest() {
+		assertEquals(this.listGraph.vertexNumber(), 3);
+		assertEquals(this.listGraph.edgeNumber(), 2);
+		assertEquals(this.listGraph.getListSize(), 4);
+		this.listGraph.addBuffer(5);
+		assertEquals(this.listGraph.vertexNumber(), 3);
+		assertEquals(this.listGraph.edgeNumber(), 2);
+		assertEquals(this.listGraph.getListSize(), 9);
+	}
+	
+	@Test
+	public void mergeWithTest() {
+		ListGraph<Integer, Double> nextListGraph = new ListGraph<Integer, Double>(2);
+		Integer vertex4 = new Integer(4);
+		Integer vertex5 = new Integer(5);
+		Double edge3 = new Double(3);
+		nextListGraph.addVertex(vertex4);
+		nextListGraph.addVertex(vertex5);
+		nextListGraph.addEdge(vertex4, vertex5, edge3);
+		this.listGraph.mergeWith(nextListGraph);
+		assertEquals(this.listGraph.getListSize(), 6);
+		assertEquals(this.listGraph.vertexNumber(), 5);
+		assertEquals(this.listGraph.edgeNumber(), 3);
+	}
+	
 }

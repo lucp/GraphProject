@@ -345,4 +345,45 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		return true;
 	}
 
+	@Override
+	public void addBuffer(int buffer) {
+		@SuppressWarnings("unchecked")
+		EdgeType[][] newEdges = (EdgeType[][]) new Object[this.matrixSize+buffer][this.matrixSize+buffer];
+		for (int i = 0; i < this.matrixSize; i++){
+			for (int j = 0; j < this.matrixSize; j++){
+				newEdges[i][j] = this.edges[i][j];
+			}
+		}
+		this.matrixSize += buffer;
+		for (int ibuffer = this.matrixSize - buffer; ibuffer < this.matrixSize; ibuffer++) {
+			for (int i = 0; i < this.matrixSize; i++){
+				newEdges[i][ibuffer] = null;
+				newEdges[ibuffer][i] = null;
+			}
+		}
+		this.edges = newEdges;
+	}
+
+	@Override
+	public void mergeWith(Graph<VertexType, EdgeType> graph) {
+		int originalListSize = this.matrixSize;
+		int mergedListSize = graph.vertexNumber();
+		this.addBuffer(mergedListSize);
+		LinkedList<Entry<VertexType, EdgeType>> entries = graph.getAllEntries();
+		Integer index = originalListSize;
+		for (Entry<VertexType, EdgeType> entry : entries){
+			if (!this.verticies.containsKey(entry.inVertex)){
+				this.verticies.put(entry.inVertex,index);
+				index++;
+			}
+			if (!this.verticies.containsKey(entry.outVertex)){
+				this.verticies.put(entry.outVertex,index);
+				index++;
+			}
+		}
+		for (Entry<VertexType, EdgeType> entry : entries){
+			this.edges[this.verticies.get(entry.inVertex)][this.verticies.get(entry.outVertex)] = entry.midEdge;
+		}
+	}
+
 }

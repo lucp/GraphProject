@@ -383,4 +383,40 @@ public class ListGraph<VertexType, EdgeType> implements Graph<VertexType, EdgeTy
 		return true;
 	}
 
+	@Override
+	public void addBuffer(int buffer) {
+		@SuppressWarnings("unchecked")
+		LinkedList<ListElement<VertexType, EdgeType>>[] newNeighbourhood = new LinkedList[this.listSize+buffer];
+		for (int i = 0; i < this.listSize; i++){
+			newNeighbourhood[i] = this.neighbourhood[i];
+		}
+		this.listSize += buffer;
+		this.neighbourhood = newNeighbourhood;
+	}
+	
+	@Override
+	public void mergeWith(Graph<VertexType, EdgeType> graph) { //TODO
+		int originalListSize = this.listSize;
+		int mergedListSize = graph.vertexNumber();
+		this.addBuffer(mergedListSize);
+		LinkedList<Entry<VertexType, EdgeType>> entries = graph.getAllEntries();
+		Integer index = originalListSize;
+		for (Entry<VertexType, EdgeType> entry : entries){
+			if (!this.verticies.containsKey(entry.inVertex)){
+				this.verticies.put(entry.inVertex,index);
+				index++;
+			}
+			if (!this.verticies.containsKey(entry.outVertex)){
+				this.verticies.put(entry.outVertex,index);
+				index++;
+			}
+		}
+		for (int i = originalListSize; i < this.listSize; i++){
+			this.neighbourhood[i] =  new LinkedList<ListElement<VertexType, EdgeType>>();
+		}
+		for (Entry<VertexType, EdgeType> entry : entries){
+			this.neighbourhood[this.verticies.get(entry.inVertex)].add(new ListElement<VertexType, EdgeType>(entry.outVertex, entry.midEdge));
+		}
+	}
+
 }

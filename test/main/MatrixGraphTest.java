@@ -231,5 +231,31 @@ public class MatrixGraphTest {
 		this.matrixGraph.addEdge(tmpVertex, vertex1, tmpEdge);
 		assertFalse(this.matrixGraph.isTree());
 	}
+	
+	@Test
+	public void addBufferTest() {
+		assertEquals(this.matrixGraph.vertexNumber(), 3);
+		assertEquals(this.matrixGraph.edgeNumber(), 2);
+		assertEquals(this.matrixGraph.getMatrixSize(), 4);
+		this.matrixGraph.addBuffer(5);
+		assertEquals(this.matrixGraph.vertexNumber(), 3);
+		assertEquals(this.matrixGraph.edgeNumber(), 2);
+		assertEquals(this.matrixGraph.getMatrixSize(), 9);
+	}
+	
+	@Test
+	public void mergeWithTest() {
+		MatrixGraph<Integer, Double> nextmatrixGraph = new MatrixGraph<Integer, Double>(2);
+		Integer vertex4 = new Integer(4);
+		Integer vertex5 = new Integer(5);
+		Double edge3 = new Double(3);
+		nextmatrixGraph.addVertex(vertex4);
+		nextmatrixGraph.addVertex(vertex5);
+		nextmatrixGraph.addEdge(vertex4, vertex5, edge3);
+		this.matrixGraph.mergeWith(nextmatrixGraph);
+		assertEquals(this.matrixGraph.getMatrixSize(), 6);
+		assertEquals(this.matrixGraph.vertexNumber(), 5);
+		assertEquals(this.matrixGraph.edgeNumber(), 3);
+	}
 
 }
