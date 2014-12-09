@@ -17,11 +17,12 @@ public class HuffmanTest {
 	public void generateTreeTest() throws InstantiationException, IllegalAccessException {
 		String text = "TO BE OR NOT TO BE";
 		Huffman huffman = new Huffman(text, MatrixGraph.class);
-		Graph<HVertex, HEdge> graph = huffman.generateTree();
-		assertEquals(graph.vertexNumber(), 13);
-		assertEquals(graph.edgeNumber(), 12);
-		assertEquals(graph.getRoot().probability, 18);
+		Graph<HVertex, HEdge> tree = huffman.generateTree();
+		assertEquals(tree.vertexNumber(), 13);
+		assertEquals(tree.edgeNumber(), 12);
+		assertEquals(tree.getRoot().probability, 18);
 		System.out.println(huffman.encode());
+		System.out.println(huffman.getCodeOf("T", tree));
 	}
 
 }

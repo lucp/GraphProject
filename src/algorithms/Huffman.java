@@ -98,4 +98,36 @@ public class Huffman {
 		return code;
 	}
 	
+	public String encode(Graph<HVertex, HEdge> tree) {
+		String code = new String();
+		HVertex root = tree.getRoot();
+		BFS<HVertex, HEdge> bfs = new BFS<HVertex, HEdge>(tree);
+		for (int i = 0; i < this.expression.length(); i++) {
+			HVertex same = new HVertex(0, String.valueOf(this.expression.charAt(i)));
+			HVertex target = tree.getVertexByValue(same);
+			LinkedList<ListElement<HVertex, HEdge>> path = bfs.findPathAsListElements(root, target);
+			for (ListElement<HVertex, HEdge> element : path) {
+				if (element.inEdge != null) {
+					code += element.inEdge.code;
+				}
+			}
+		}
+		return code;
+	}
+	
+	public String getCodeOf(String character, Graph<HVertex, HEdge> tree) {
+		String code = new String();
+		HVertex root = tree.getRoot();
+		BFS<HVertex, HEdge> bfs = new BFS<HVertex, HEdge>(tree);
+		HVertex same = new HVertex(0, character);
+		HVertex target = tree.getVertexByValue(same);
+		LinkedList<ListElement<HVertex, HEdge>> path = bfs.findPathAsListElements(root, target);
+		for (ListElement<HVertex, HEdge> element : path) {
+			if (element.inEdge != null) {
+				code += element.inEdge.code;
+			}
+		}
+		return code;
+	}
+	
 }
