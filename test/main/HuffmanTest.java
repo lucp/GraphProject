@@ -15,11 +15,13 @@ public class HuffmanTest {
 
 	@Test
 	public void generateTreeTest() throws InstantiationException, IllegalAccessException {
-		Huffman huffman = new Huffman("TO BE OR NOT TO BE", MatrixGraph.class);
+		String text = "TO BE OR NOT TO BE";
+		Huffman huffman = new Huffman(text, MatrixGraph.class);
 		Graph<HVertex, HEdge> graph = huffman.generateTree();
 		assertEquals(graph.vertexNumber(), 13);
 		assertEquals(graph.edgeNumber(), 12);
 		assertEquals(graph.getRoot().probability, 18);
+		System.out.println(huffman.encode());
 	}
 
 }

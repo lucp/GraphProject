@@ -13,8 +13,14 @@ public class HVertex {
 	
 	@Override
 	public boolean equals(Object hvertex) {
-		if (this.character.equals(((HVertex)hvertex).character)) return true;
-		else return false;
+		if (this.character != null) {
+			if (this.character.equals(((HVertex)hvertex).character)) return true;
+			else return false;
+		}
+		else {
+			if (hvertex == null) return true;
+			else return false;
+		}
 	}
 	
 }

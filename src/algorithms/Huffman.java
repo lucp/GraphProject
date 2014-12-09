@@ -1,6 +1,7 @@
 package algorithms;
 
 import graphs.Graph;
+import graphs.ListElement;
 import graphs.ListGraph;
 import graphs.MatrixGraph;
 
@@ -12,9 +13,11 @@ import model.HVertex;
 
 public class Huffman {
 
+	private String expression;
 	private LinkedList<Graph<HVertex, HEdge>> trees;
 	
 	public Huffman(String input, Class<?> graphClass) throws InstantiationException, IllegalAccessException {
+		this.expression = input;
 		this.trees = new LinkedList<Graph<HVertex, HEdge>>();
 		HashMap<String, HVertex> characters = new HashMap<String, HVertex>();
 		for (int i = 0; i < input.length(); i++) {
@@ -75,6 +78,24 @@ public class Huffman {
 			this.trees.remove(minRoot2);
 		}
 		return this.trees.getFirst();
+	}
+	
+	public String encode() {
+		String code = new String();
+		Graph<HVertex, HEdge> tree = this.generateTree();
+		HVertex root = tree.getRoot();
+		BFS<HVertex, HEdge> bfs = new BFS<HVertex, HEdge>(tree);
+		for (int i = 0; i < this.expression.length(); i++) {
+			HVertex same = new HVertex(0, String.valueOf(this.expression.charAt(i)));
+			HVertex target = tree.getVertexByValue(same);
+			LinkedList<ListElement<HVertex, HEdge>> path = bfs.findPathAsListElements(root, target);
+			for (ListElement<HVertex, HEdge> element : path) {
+				if (element.inEdge != null) {
+					code += element.inEdge.code;
+				}
+			}
+		}
+		return code;
 	}
 	
 }
