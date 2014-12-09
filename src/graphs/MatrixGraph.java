@@ -371,13 +371,9 @@ public class MatrixGraph<VertexType, EdgeType> implements Graph<VertexType, Edge
 		this.addBuffer(mergedListSize);
 		LinkedList<Entry<VertexType, EdgeType>> entries = graph.getAllEntries();
 		Integer index = originalListSize;
-		for (Entry<VertexType, EdgeType> entry : entries){
-			if (!this.verticies.containsKey(entry.inVertex)){
-				this.verticies.put(entry.inVertex,index);
-				index++;
-			}
-			if (!this.verticies.containsKey(entry.outVertex)){
-				this.verticies.put(entry.outVertex,index);
+		for (VertexType vertex : graph.getVerticies()) {
+			if (!this.verticies.containsKey(vertex)){
+				this.verticies.put(vertex,index);
 				index++;
 			}
 		}

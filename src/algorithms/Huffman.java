@@ -1,6 +1,8 @@
 package algorithms;
 
 import graphs.Graph;
+import graphs.ListGraph;
+import graphs.MatrixGraph;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -12,7 +14,7 @@ public class Huffman {
 
 	private LinkedList<Graph<HVertex, HEdge>> trees;
 	
-	public Huffman(String input, Class<Graph<HVertex, HEdge>> graphClass) throws InstantiationException, IllegalAccessException {
+	public Huffman(String input, Class<?> graphClass) throws InstantiationException, IllegalAccessException {
 		this.trees = new LinkedList<Graph<HVertex, HEdge>>();
 		HashMap<String, HVertex> characters = new HashMap<String, HVertex>();
 		for (int i = 0; i < input.length(); i++) {
@@ -22,7 +24,13 @@ public class Huffman {
 			}
 			else {
 				HVertex vertex = new HVertex(1, character);
-				Graph<HVertex, HEdge> root = graphClass.newInstance();
+				Graph<HVertex, HEdge> root;
+				if (graphClass == MatrixGraph.class) {
+					root = new MatrixGraph<HVertex, HEdge>(1);
+				}
+				else {
+					root = new ListGraph<HVertex, HEdge>(1);
+				}
 				root.addVertex(vertex);
 				this.trees.add(root);
 			}
