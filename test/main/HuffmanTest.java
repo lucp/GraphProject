@@ -21,8 +21,8 @@ public class HuffmanTest {
 		assertEquals(tree.vertexNumber(), 13);
 		assertEquals(tree.edgeNumber(), 12);
 		assertEquals(tree.getRoot().probability, 18);
-		System.out.println(huffman.encode());
-		System.out.println(huffman.getCodeOf("T", tree));
+		System.out.println("Original:\t" + huffman.toBinaryString(text));
+		System.out.println("Encoded:\t" + huffman.encode());
 	}
 
 }

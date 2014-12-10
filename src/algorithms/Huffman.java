@@ -94,6 +94,7 @@ public class Huffman {
 					code += element.inEdge.code;
 				}
 			}
+			code += " ";
 		}
 		return code;
 	}
@@ -111,6 +112,7 @@ public class Huffman {
 					code += element.inEdge.code;
 				}
 			}
+			code += " ";
 		}
 		return code;
 	}
@@ -128,6 +130,18 @@ public class Huffman {
 			}
 		}
 		return code;
+	}
+	
+	public String toBinaryString(String input) {
+		String binary = new String();
+		for (int i = 0; i < input.length(); i++) {
+			String intParse = Integer.toBinaryString(input.charAt(i));
+			while (intParse.length() < 8) {
+				intParse = "0" + intParse;
+			}
+			binary += intParse + " ";
+		}
+		return binary;
 	}
 	
 }
