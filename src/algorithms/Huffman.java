@@ -144,4 +144,8 @@ public class Huffman {
 		return binary;
 	}
 	
+	public double getRatio(String code1, String code2) {
+		return (double)code1.trim().length() / (double)code2.trim().length();
+	}
+	
 }
