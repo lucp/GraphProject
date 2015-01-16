@@ -132,6 +132,29 @@ public class Huffman {
 		return code;
 	}
 	
+	public String decode(String code) {
+		code = code.trim();
+		int i = 0;
+		String text = new String();
+		while (i < code.length()) {
+			HVertex vertex = this.trees.getFirst().getRoot();
+			LinkedList<ListElement<HVertex, HEdge>> element = this.trees.getFirst().getNeighboursAsListElements(vertex);
+			while (!element.isEmpty()) {
+				if (String.valueOf(element.get(0).inEdge.code).equals(code.charAt(i))) {
+					vertex = element.get(0).inVertex;
+					text += String.valueOf(element.get(0).inEdge.code);
+				}
+				else {
+					vertex = element.get(1).inVertex;
+					text += String.valueOf(element.get(1).inEdge.code);
+				}
+				element = this.trees.getFirst().getNeighboursAsListElements(vertex);
+			}
+		}
+		return text;
+		
+	}
+	
 	public String toBinaryString(String input) {
 		String binary = new String();
 		for (int i = 0; i < input.length(); i++) {

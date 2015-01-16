@@ -28,11 +28,13 @@ public class HuffmanTest {
 		assertEquals(tree.getRoot().probability, 18);
 		String textBinary = huffman.toBinaryString(text);
 		String codeBinary = huffman.encode();
+		String decode = huffman.decode(codeBinary);
 		double ratio = huffman.getRatio(textBinary, codeBinary);
 		System.out.println(text);
 		System.out.println("Original:\t" + textBinary);
 		System.out.println("Encoded:\t" + codeBinary);
 		System.out.println("Ratio:\t" + ratio);
+		System.out.println("Decode:\t" + decode);
 	}
 
 	@Test
