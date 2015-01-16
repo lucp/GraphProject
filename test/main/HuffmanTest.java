@@ -33,8 +33,8 @@ public class HuffmanTest {
 		System.out.println(text);
 		System.out.println("Original:\t" + textBinary);
 		System.out.println("Encoded:\t" + codeBinary);
+		System.out.println("Decode:\t\t" + decode);
 		System.out.println("Ratio:\t" + ratio);
-		System.out.println("Decode:\t" + decode);
 	}
 
 	@Test

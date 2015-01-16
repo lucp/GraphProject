@@ -133,23 +133,25 @@ public class Huffman {
 	}
 	
 	public String decode(String code) {
-		code = code.trim();
+		code = code.replace(" ", "");
 		int i = 0;
 		String text = new String();
+		Graph<HVertex, HEdge> tree = this.trees.getFirst();
+		HVertex root = tree.getRoot();
 		while (i < code.length()) {
-			HVertex vertex = this.trees.getFirst().getRoot();
-			LinkedList<ListElement<HVertex, HEdge>> element = this.trees.getFirst().getNeighboursAsListElements(vertex);
-			while (!element.isEmpty()) {
-				if (String.valueOf(element.get(0).inEdge.code).equals(code.charAt(i))) {
-					vertex = element.get(0).inVertex;
-					text += String.valueOf(element.get(0).inEdge.code);
+			HVertex vertex = root;
+			LinkedList<ListElement<HVertex, HEdge>> elements = tree.getNeighboursAsListElements(vertex);
+			while (!elements.isEmpty()) {
+				if (String.valueOf(elements.get(0).inEdge.code).equals(String.valueOf(code.charAt(i)))) {
+					vertex = elements.get(0).inVertex;
 				}
 				else {
-					vertex = element.get(1).inVertex;
-					text += String.valueOf(element.get(1).inEdge.code);
+					vertex = elements.get(1).inVertex;
 				}
-				element = this.trees.getFirst().getNeighboursAsListElements(vertex);
+				i++;
+				elements = tree.getNeighboursAsListElements(vertex);
 			}
+			text += vertex.character;
 		}
 		return text;
 		
