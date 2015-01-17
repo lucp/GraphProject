@@ -133,16 +133,16 @@ public class Huffman {
 	}
 	
 	public String decode(String code) {
-		code = code.replace(" ", "");
+		String decode = code.replace(" ", "");
 		int i = 0;
 		String text = new String();
 		Graph<HVertex, HEdge> tree = this.trees.getFirst();
 		HVertex root = tree.getRoot();
-		while (i < code.length()) {
+		while (i < decode.length()) {
 			HVertex vertex = root;
 			LinkedList<ListElement<HVertex, HEdge>> elements = tree.getNeighboursAsListElements(vertex);
 			while (!elements.isEmpty()) {
-				if (String.valueOf(elements.get(0).inEdge.code).equals(String.valueOf(code.charAt(i)))) {
+				if (String.valueOf(elements.get(0).inEdge.code).equals(String.valueOf(decode.charAt(i)))) {
 					vertex = elements.get(0).inVertex;
 				}
 				else {
@@ -170,7 +170,7 @@ public class Huffman {
 	}
 	
 	public double getRatio(String code1, String code2) {
-		return (double)code1.trim().length() / (double)code2.trim().length();
+		return (double)code1.length() / (double)code2.length();
 	}
 	
 }

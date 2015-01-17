@@ -3,7 +3,10 @@ package main;
 import static org.junit.Assert.*;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import graphs.Graph;
@@ -29,7 +32,9 @@ public class HuffmanTest {
 		String textBinary = huffman.toBinaryString(text);
 		String codeBinary = huffman.encode();
 		String decode = huffman.decode(codeBinary);
-		double ratio = huffman.getRatio(textBinary, codeBinary);
+		String textBinaryR = textBinary.replace(" ", "");
+		String codeBinaryR = codeBinary.replace(" ", "");
+		double ratio = huffman.getRatio(textBinaryR, codeBinaryR);
 		System.out.println(text);
 		System.out.println("Original:\t" + textBinary);
 		System.out.println("Encoded:\t" + codeBinary);
@@ -62,9 +67,24 @@ public class HuffmanTest {
 		Huffman huffman = new Huffman(text, ListGraph.class);
 		String textBinary = huffman.toBinaryString(text);
 		String codeBinary = huffman.encode();
-		double ratio = huffman.getRatio(textBinary, codeBinary);
+		String textBinaryR = textBinary.replace(" ", "");
+		String codeBinaryR = codeBinary.replace(" ", "");
+		double ratio = huffman.getRatio(textBinaryR, codeBinaryR);
 		System.out.println("\nText file");
 		System.out.println("Ratio:\t" + ratio);
+		try {
+			File file = new File("res/encoded.txt");
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			bufferedWriter.write(codeBinary);
+			bufferedWriter.close();
+			System.out.println("File writing - done");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }
