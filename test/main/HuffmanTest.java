@@ -40,17 +40,19 @@ public class HuffmanTest {
 		System.out.println("Encoded:\t" + codeBinary);
 		System.out.println("Decode:\t\t" + decode);
 		System.out.println("Ratio:\t" + ratio);
+		System.out.println();
 	}
 
 	@Test
 	public void textFileCompressTest() throws InstantiationException, IllegalAccessException {
-		String text = null;
+		System.out.print("Reading file...");
+		String text = new String();
 		BufferedReader bufferedReader = null;
 		try {
-			String line;
+			int character = 45;
 			bufferedReader = new BufferedReader(new FileReader("res/seneca.txt"));
-			while ((line = bufferedReader.readLine()) != null) {
-				text += line;
+			while ((character = bufferedReader.read()) != -1) {
+				text += String.valueOf((char)character);
 			}
 		} 
 		catch (IOException e) {
@@ -64,15 +66,23 @@ public class HuffmanTest {
 				ex.printStackTrace();
 			}
 		}
+		System.out.println("done");
+		System.out.print("Constructing...");
 		Huffman huffman = new Huffman(text, ListGraph.class);
+		System.out.println("done");
+		System.out.print("To binary string...");
 		String textBinary = huffman.toBinaryString(text);
+		System.out.println("done");
+		System.out.print("Encoding...");
 		String codeBinary = huffman.encode();
+		System.out.println("done");
 		String textBinaryR = textBinary.replace(" ", "");
 		String codeBinaryR = codeBinary.replace(" ", "");
 		double ratio = huffman.getRatio(textBinaryR, codeBinaryR);
 		System.out.println("\nText file");
 		System.out.println("Ratio:\t" + ratio);
 		try {
+			System.out.print("Encoded file writing...");
 			File file = new File("res/encoded.txt");
 			if (!file.exists()) {
 				file.createNewFile();
@@ -81,10 +91,26 @@ public class HuffmanTest {
 			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 			bufferedWriter.write(codeBinary);
 			bufferedWriter.close();
-			System.out.println("File writing - done");
+			System.out.println("done");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		try {
+			System.out.print("Decoded file writing...");
+			File file = new File("res/decoded.txt");
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			FileWriter fileWriter = new FileWriter(file.getAbsoluteFile());
+			BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+			String decoded = huffman.decode(codeBinary);
+			bufferedWriter.write(decoded);
+			bufferedWriter.close();
+			System.out.println("done");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		System.out.println("FINISH");
 	}
 	
 }

@@ -161,9 +161,12 @@ public class Huffman {
 		String binary = new String();
 		for (int i = 0; i < input.length(); i++) {
 			String intParse = Integer.toBinaryString(input.charAt(i));
-			while (intParse.length() < 8) {
-				intParse = "0" + intParse;
+			int intParseLength = intParse.length();
+			String zeros = new String();
+			for (int j = intParseLength; j < 8; j++) {
+				zeros = zeros.concat("0");
 			}
+			intParse = zeros.concat(intParse);
 			binary += intParse + " ";
 		}
 		return binary;
